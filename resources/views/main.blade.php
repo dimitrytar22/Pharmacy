@@ -6,30 +6,6 @@
 
 @section('content')
 
-
-    <header class="bg-white shadow">
-        <div class="container mx-auto flex items-center justify-between p-4">
-            <div class="flex items-center">
-                <img src="{{asset('images/logo.png')}}" alt="Pharmacy Logo" class="h-10">
-                <h1 class="text-xl font-bold ml-2">Pharmacy</h1>
-            </div>
-            <nav>
-                <ul class="flex space-x-4">
-                    <li><a href="#home" class="text-gray-700 hover:text-blue-500">Home</a></li>
-                    <li><a href="#products" class="text-gray-700 hover:text-blue-500">Products</a></li>
-                    <li><a href="#services" class="text-gray-700 hover:text-blue-500">Services</a></li>
-                    <li><a href="#about" class="text-gray-700 hover:text-blue-500">About Us</a></li>
-                    <li><a href="#contact" class="text-gray-700 hover:text-blue-500">Contact</a></li>
-                </ul>
-            </nav>
-            <div>
-                <a href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</a>
-                <a href="register.html" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Sign
-                    Up</a>
-            </div>
-        </div>
-    </header>
-
     <section id="hero" class="bg-blue-500 text-white py-20">
         <div class="container mx-auto text-center">
             <h2 class="text-4xl font-bold">Your Trusted Partner in Health</h2>
