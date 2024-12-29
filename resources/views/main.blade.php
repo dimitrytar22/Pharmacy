@@ -12,7 +12,7 @@
             <p class="mt-4 text-lg">Explore a wide range of medicines, healthcare products, and expert services all in
                 one
                 place.</p>
-            <a href="#products"
+            <a href="{{route("products.index")}}"
                class="mt-6 inline-block bg-white text-blue-500 font-bold px-6 py-3 rounded hover:bg-gray-100">Shop
                 Now</a>
         </div>
@@ -23,19 +23,19 @@
             <h2 class="text-3xl font-bold">Our Products</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
                 <div class="bg-white shadow rounded p-4">
-                    <img src="medicine1.jpg" alt="Medicine 1" class="h-40 w-full object-cover rounded">
+                    <img src="https://dummyimage.com/300x300/cccccc/000000&text=123" alt="Medicine 1" class="h-40 w-full object-cover rounded">
                     <h3 class="mt-4 font-semibold">Pain Relievers</h3>
                 </div>
                 <div class="bg-white shadow rounded p-4">
-                    <img src="medicine2.jpg" alt="Medicine 2" class="h-40 w-full object-cover rounded">
+                    <img src="https://dummyimage.com/300x300/cccccc/000000&text=123" alt="Medicine 2" class="h-40 w-full object-cover rounded">
                     <h3 class="mt-4 font-semibold">Vitamins & Supplements</h3>
                 </div>
                 <div class="bg-white shadow rounded p-4">
-                    <img src="medicine3.jpg" alt="Medicine 3" class="h-40 w-full object-cover rounded">
+                    <img src="https://dummyimage.com/300x300/cccccc/000000&text=123" alt="Medicine 3" class="h-40 w-full object-cover rounded">
                     <h3 class="mt-4 font-semibold">Skin Care</h3>
                 </div>
                 <div class="bg-white shadow rounded p-4">
-                    <img src="medicine4.jpg" alt="Medicine 4" class="h-40 w-full object-cover rounded">
+                    <img src="https://dummyimage.com/300x300/cccccc/000000&text=123" alt="Medicine 4" class="h-40 w-full object-cover rounded">
                     <h3 class="mt-4 font-semibold">Personal Hygiene</h3>
                 </div>
             </div>

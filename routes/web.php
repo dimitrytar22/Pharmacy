@@ -26,9 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
+    Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('index');
+    Route::get('/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('show');
 
-Route::get('/products', function (){
-    dd(\App\Models\Product::query()->first()->features);
 });
 
