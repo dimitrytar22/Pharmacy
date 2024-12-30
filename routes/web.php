@@ -32,4 +32,6 @@ Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
     Route::get('/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('show');
 
 });
+Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'create'])->name('contact.create');
+Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 
