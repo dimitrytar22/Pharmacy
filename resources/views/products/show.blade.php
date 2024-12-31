@@ -16,7 +16,7 @@
         <div class="container mx-auto max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden">
             <!-- Product Image -->
             <div class="w-full h-64 bg-gray-200">
-                <img src="https://picsum.photos/600/400" alt="Product Image" class="w-full h-full object-cover">
+                <img src="{{$product->image == null ? "https://picsum.photos/600/400" : asset("images/" . $product->image) }}" alt="Product Image" class="w-full h-full object-cover">
             </div>
 
             <!-- Product Info -->
