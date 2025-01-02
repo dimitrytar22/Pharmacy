@@ -28,10 +28,18 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
-    Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('index');
+//    Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('index');
     Route::get('/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('show');
+
+});
+Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
+    Route::get('/', [\App\Http\Controllers\CategoryController::class, 'index'])->name('index');
+    Route::get('/{category}', [\App\Http\Controllers\CategoryController::class, 'show'])->name('show');
 
 });
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function (){
+    Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
+});

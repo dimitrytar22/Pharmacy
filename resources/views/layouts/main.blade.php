@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
+    <title>@yield('title') - Pharmacy</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -26,7 +26,7 @@
         <nav>
             <ul class="flex space-x-4">
                 <li><a href="{{route('main')}}" class="text-gray-700 hover:text-blue-500">Home</a></li>
-                <li><a href="{{route('products.index')}}" class="text-gray-700 hover:text-blue-500">Products</a></li>
+                <li><a href="{{route('categories.index')}}" class="text-gray-700 hover:text-blue-500">Products</a></li>
                 <li><a href="#services" class="text-gray-700 hover:text-blue-500">Services</a></li>
                 <li><a href="#about" class="text-gray-700 hover:text-blue-500">About Us</a></li>
                 <li><a href="{{route('contact.create')}}" class="text-gray-700 hover:text-blue-500">Contact</a></li>
@@ -61,6 +61,11 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            @can('view', \Illuminate\Support\Facades\Auth::user())
+                                <x-dropdown-link :href="route('admin.index')">
+                                    {{ __('Admin Panel') }}
+                                </x-dropdown-link>
+                            @endcan
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>

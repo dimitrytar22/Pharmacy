@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class ProductFactory extends Factory
             'price' => rand(10,3000),
             'instruction' => $this->faker->text(500),
             'count' => rand(0,1000),
+            'category_id' => Category::all()->random(1)->first()->id
         ];
     }
 }

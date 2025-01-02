@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="ml-2 mt-2">
-        <a href="{{ route('products.index') }}" class="inline-block bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300">
+        <a href="{{ route('categories.index') }}" class="inline-block bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300">
             ← Back
         </a>
     </div>
@@ -15,7 +15,7 @@
     <section id="product-details" class="py-16 bg-gray-100">
         <div class="container mx-auto max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden">
             <!-- Product Image -->
-            <div class="w-full h-64 bg-gray-200">
+            <div class="w-full bg-gray-200">
                 <img src="{{$product->image == null ? "https://picsum.photos/600/400" : asset("images/" . $product->image) }}" alt="Product Image" class="w-full h-full object-cover">
             </div>
 
