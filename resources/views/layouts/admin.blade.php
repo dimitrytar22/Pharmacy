@@ -19,7 +19,7 @@
     <!-- Sidebar -->
     <aside class="w-64 bg-blue-800 text-white min-h-screen">
         <div class="p-4">
-            <a href="">
+            <a href="{{route('admin.index')}}">
                 <div class="flex items-center">
                     <img src="{{ asset('images/logo.png') }}" alt="Admin Logo" class="h-10">
                     <h1 class="text-xl font-bold ml-2">Admin Panel</h1>
@@ -29,13 +29,13 @@
         <nav class="mt-8">
             <ul class="space-y-4 px-4">
                 <li>
-                    <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Dashboard</a>
+                    <a href="{{route('admin.index')}}" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Dashboard</a>
                 </li>
                 <li>
                     <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Manage Products</a>
                 </li>
                 <li>
-                    <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Manage Categories</a>
+                    <a href="{{route('admin.categories.index')}}" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Manage Categories</a>
                 </li>
                 <li>
                     <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Orders</a>
@@ -45,6 +45,11 @@
                 </li>
                 <li>
                     <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Settings</a>
+                </li>
+                <li>
+                    <a href="{{route('main')}}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                        Exit Admin Panel
+                    </a>
                 </li>
             </ul>
         </nav>
