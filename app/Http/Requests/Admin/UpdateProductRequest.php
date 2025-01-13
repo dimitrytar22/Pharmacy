@@ -23,7 +23,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:256',
-            'instruction' => 'required|min:3|max:2000',
+            'instruction' => 'required|min:3|max:20000',
             'features' => 'required|array',
             'image' => 'image|max:2048',
             'category_id' => 'required',

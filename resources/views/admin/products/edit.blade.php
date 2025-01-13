@@ -123,6 +123,7 @@
                     </button>
                 </div>
 
+            </form>
                 <form action="{{route("admin.products.destroy", $product->id)}}" method="POST">
                     @method('delete')
                     @csrf
@@ -133,7 +134,6 @@
                         </button>
                     </div>
                 </form>
-            </form>
         </div>
     </div>
     <script>
