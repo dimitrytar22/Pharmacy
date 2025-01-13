@@ -32,10 +32,11 @@
                     <a href="{{route('admin.index')}}" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Dashboard</a>
                 </li>
                 <li>
-                    <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Manage Products</a>
+                    <a href="{{route('admin.products.index')}}" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Manage Products</a>
                 </li>
                 <li>
-                    <a href="{{route('admin.categories.index')}}" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Manage Categories</a>
+                    <a href="{{route('admin.categories.index')}}"
+                       class="block text-white hover:bg-blue-700 rounded px-3 py-2">Manage Categories</a>
                 </li>
                 <li>
                     <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Orders</a>
@@ -59,7 +60,10 @@
     <div class="flex-1">
         <header class="bg-white shadow">
             <div class="container mx-auto flex items-center justify-between p-4">
-                <h2 class="text-xl font-bold">Admin Panel</h2>
+                <h2 class="text-xl font-bold">Admin Panel
+                    @hasSection('subtitle')
+                        - @yield('subtitle')
+                    @endif</h2>
                 <div>
                     @auth
                         <div class="flex items-center space-x-4">
@@ -76,7 +80,7 @@
             </div>
         </header>
 
-        <main class="p-8">
+        <main class="pl-8 pr-8 pt-2 pb-2">
             @yield('content')
         </main>
     </div>

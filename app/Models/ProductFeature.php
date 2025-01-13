@@ -11,8 +11,9 @@ class ProductFeature extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+    protected $fillable = [
+      'product_id',
+      'feature_id',
+    ];
+
 }

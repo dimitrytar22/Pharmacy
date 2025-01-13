@@ -12,7 +12,6 @@
                 @csrf
                 @method('PUT')
 
-                <!-- Title Field -->
                 <div>
                     <label for="title" class="block text-sm font-medium text-gray-700">Category Title</label>
                     <input type="text" name="title" id="title" value="{{ $category->title }}"
@@ -20,7 +19,6 @@
                            required>
                 </div>
 
-                <!-- Image Field -->
                 <div>
                     <label for="image" class="block text-sm font-medium text-gray-700">Category Image</label>
                     <input type="file" name="image" id="image"
@@ -33,7 +31,6 @@
                     @endif
                 </div>
 
-                <!-- Submit Button -->
                 <div class="flex justify-end">
                     <button type="submit"
                             class="bg-blue-500 text-white px-6 py-2 rounded-md shadow hover:bg-blue-600 transition">

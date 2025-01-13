@@ -10,8 +10,17 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'title',
+        'price',
+        'instruction',
+        'category_id',
+        'count',
+        'image',
+    ];
+
     public function features()
     {
-        return $this->hasMany(ProductFeature::class);
+        return $this->belongsToMany(Feature::class, 'product_features');
     }
 }

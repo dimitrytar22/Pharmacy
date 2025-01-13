@@ -45,5 +45,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
         Route::get('/', [\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('index');
         Route::get('/{category}/edit', [\App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('edit');
         Route::put('/{category}', [\App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('update');
+        Route::get('/create', [\App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('store');
+
+    });
+    Route::group(['prefix' => 'products', 'as' => 'products.'], function (){
+        Route::get('/', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('create');
+        Route::get('/{product}/edit', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('edit');
+        Route::post('/', [\App\Http\Controllers\Admin\ProductController::class, 'store'])->name('store');
+        Route::put('/{product}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('update');
+        Route::delete('/{product}', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('destroy');
+
+
     });
 });

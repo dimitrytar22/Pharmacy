@@ -11,7 +11,7 @@
                 <a href="{{ route('categories.show', $category->id) }}">
                     <div class="bg-white rounded shadow hover:shadow-lg transition-shadow duration-300">
                         <img src="{{ $category->image == null ? 'https://dummyimage.com/300x300/cccccc/000000&text=' . $category->title : asset('images/' . $category->image) }}"
-                             alt="Category Image" class="rounded-t w-full h-40 object-cover">
+                             alt="Category Image" class="rounded-t w-full h-80 object-cover">
                         <div class="p-4">
                             <h3 class="text-lg font-semibold text-gray-700">{{ $category->title }}</h3>
 

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class StoreCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,13 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:256',
-            'image' => ''
+            'image' => 'required|mimes:jpeg,png,jpg,svg|max:2048',
+        ];
+    }
+    public function  messages()
+    {
+        return [
+            'image.mimes' => 'You can upload only .jpeg .png .jpg .svg files!'
         ];
     }
 }

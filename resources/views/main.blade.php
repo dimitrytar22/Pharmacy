@@ -27,7 +27,7 @@ Your Health Partner
                         <div class="bg-white shadow rounded p-4">
                             <img
                                 src="{{$category->image == null  ? "https://dummyimage.com/300x300/cccccc/000000&text=$category->title" : asset('images/'.$category->image)}}"
-                                alt="Medicine 1" class="h-40 w-full object-cover rounded">
+                                alt="Medicine 1" class="h-80 w-full object-cover rounded">
                             <h3 class="mt-4 font-semibold">{{$category->title}}</h3>
                         </div>
                     </a>

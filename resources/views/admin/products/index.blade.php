@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('title')
-    Categories
+    Products
 @endsection
 @section('subtitle')
-    Manage Categories
+    Manage Products
 @endsection
 @section('content')
     <div class="container mx-auto mt-8">
@@ -27,26 +27,29 @@
 
         @endif
 
-            <div class="flex justify-left mb-4">
-                <a href="{{route('admin.categories.create')}}"
-                   class="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow hover:bg-blue-600 transition duration-300">
-                    Add Category
-                </a>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            @foreach($categories as $category)
-                <a href="{{ route('admin.categories.edit', $category->id) }}">
+        <div class="flex justify-left mb-4">
+            <a href="{{route('admin.products.create')}}"
+               class="bg-blue-500 text-white font-bold py-2 px-4 rounded shadow hover:bg-blue-600 transition duration-300">
+                Add Product
+            </a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            @foreach($products as $product)
+                <a href="{{ route('admin.products.edit', $product->id) }}">
                     <div class="bg-white rounded shadow hover:shadow-lg transition-shadow duration-300">
                         <img
-                            src="{{ $category->image == null ? 'https://dummyimage.com/300x300/cccccc/000000&text=' . $category->title : asset('images/' . $category->image) }}"
-                            alt="Category Image" class="rounded-t w-full h-80 object-cover">
+                            src="{{ $product->image == null ? 'https://dummyimage.com/300x300/cccccc/000000&text=' . $product->title : asset('images/' . $product->image) }}"
+                            alt="Product Image" class="rounded-t w-full h-80 object-cover">
                         <div class="p-4">
-                            <h3 class="text-lg font-semibold text-gray-700">{{ $category->title }}</h3>
+                            <h3 class="text-lg font-semibold text-gray-700">{{ $product->title }}</h3>
 
                         </div>
                     </div>
                 </a>
             @endforeach
+        </div>
+        <div class="mt-2">
+            {{$products->links()}}
         </div>
     </div>
     <script>
