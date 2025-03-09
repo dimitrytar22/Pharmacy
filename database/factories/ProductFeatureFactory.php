@@ -19,8 +19,7 @@ class ProductFeatureFactory extends Factory
     {
         return [
             'product_id' => Product::all()->random(1)->first()->id,
-            'title' => $this->faker->word(5),
-            'description' => $this->faker->text(20),
+            'feature_id' => Product::all()->random(1)->first()->id,
         ];
     }
 }

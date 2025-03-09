@@ -5,22 +5,22 @@
 @endsection
 
 @section('content')
-    <div class="container mx-auto mt-8">
-        <h2 class="text-2xl font-bold text-gray-700 mb-6">{{ $category->title }}</h2>
+    <div class="container mt-5">
+        <h2 class="h2 font-weight-bold text-dark mb-4">{{ $category->title }}</h2>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div class="row">
             @foreach($products as $product)
-                <a href="{{ route('products.show', $product->id) }}">
-                    <div class="bg-white rounded shadow hover:shadow-lg transition-shadow duration-300">
-                        <img
-                            src="{{ $product->image == null ? 'https://dummyimage.com/300x300/cccccc/000000&text=' . $product->title : asset('images/' . $product->image) }}"
-                            alt="Category Image" class="rounded-t w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold text-gray-700">{{ $product->title }}</h3>
-
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <a href="{{ route('products.show', $product->id) }}">
+                        <div class="card shadow-sm h-100">
+                            <img src="{{ $product->image == null ? 'https://dummyimage.com/300x300/cccccc/000000&text=' . $product->title : asset('images/' . $product->image) }}"
+                                 alt="Product Image" class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">{{ $product->title }}</h5>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             @endforeach
         </div>
     </div>

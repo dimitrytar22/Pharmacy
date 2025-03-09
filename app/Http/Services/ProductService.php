@@ -21,6 +21,8 @@ class ProductService
         }
         $featuresIds = [];
         foreach ($data['features'] as $feature) {
+            if(empty($feature['title']) || empty($feature['description']))
+                continue;
             $title = $feature['title'];
             $description = $feature['description'];
             $featuresIds[] = Feature::firstOrCreate([
@@ -47,6 +49,8 @@ class ProductService
 
         $featuresIds = [];
         foreach ($data['features'] as $feature) {
+            if(empty($feature['title']) || empty($feature['description']))
+                continue;
             $title = $feature['title'];
             $description = $feature['description'];
             $featuresIds[] = Feature::create([
@@ -55,7 +59,9 @@ class ProductService
             ])->id;
         }
         $product->features()->attach($featuresIds);
-        ImageService::moveImage($image, 'images/products');
+        if(!ImageService::moveImage($image, 'images/products')){
+            abort(300, 'File not uploaded');
+        }
         return $product;
     }
 

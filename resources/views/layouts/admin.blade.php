@@ -7,72 +7,58 @@
 
     <title>@yield('title') - Admin Panel</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-gray-100 text-gray-800">
-<div class="flex">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-blue-800 text-white min-h-screen">
-        <div class="p-4">
-            <a href="{{route('admin.index')}}">
-                <div class="flex items-center">
-                    <img src="{{ asset('images/logo.png') }}" alt="Admin Logo" class="h-10">
-                    <h1 class="text-xl font-bold ml-2">Admin Panel</h1>
-                </div>
+<body class="bg-light text-dark">
+<div class="d-flex">
+    <aside class="bg-primary text-white vh-100 p-3" style="width: 250px;">
+        <div class="mb-4 text-center">
+            <a href="{{ route('admin.index') }}" class="text-white text-decoration-none d-flex align-items-center">
+                <img src="{{ asset('images/logo.png') }}" alt="Admin Logo" class="me-2" style="height: 40px;">
+                <h1 class="h5 mb-0">Admin Panel</h1>
             </a>
         </div>
-        <nav class="mt-8">
-            <ul class="space-y-4 px-4">
-                <li>
-                    <a href="{{route('admin.index')}}" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Dashboard</a>
+        <nav>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a href="{{ route('admin.index') }}" class="nav-link text-white">Dashboard</a>
                 </li>
-                <li>
-                    <a href="{{route('admin.products.index')}}" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Manage Products</a>
+                <li class="nav-item">
+                    <a href="{{ route('admin.products.index') }}" class="nav-link text-white">Manage Products</a>
                 </li>
-                <li>
-                    <a href="{{route('admin.categories.index')}}"
-                       class="block text-white hover:bg-blue-700 rounded px-3 py-2">Manage Categories</a>
+                <li class="nav-item">
+                    <a href="{{ route('admin.categories.index') }}" class="nav-link text-white">Manage Categories</a>
                 </li>
-                <li>
-                    <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Orders</a>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white">Orders</a>
                 </li>
-                <li>
-                    <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Users</a>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white">Users</a>
                 </li>
-                <li>
-                    <a href="" class="block text-white hover:bg-blue-700 rounded px-3 py-2">Settings</a>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white">Settings</a>
                 </li>
-                <li>
-                    <a href="{{route('main')}}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-                        Exit Admin Panel
-                    </a>
+                <li class="nav-item mt-3">
+                    <a href="{{ route('main') }}" class="btn btn-danger w-100">Exit Admin Panel</a>
                 </li>
             </ul>
         </nav>
     </aside>
 
     <!-- Main Content -->
-    <div class="flex-1">
-        <header class="bg-white shadow">
-            <div class="container mx-auto flex items-center justify-between p-4">
-                <h2 class="text-xl font-bold">Admin Panel
-                    @hasSection('subtitle')
-                        - @yield('subtitle')
-                    @endif</h2>
+    <div class="flex-grow-1">
+        <header class="bg-white shadow p-3 mb-4">
+            <div class="container d-flex justify-content-between align-items-center">
+                <h2 class="h4">Admin Panel @hasSection('subtitle') - @yield('subtitle') @endif</h2>
                 <div>
                     @auth
-                        <div class="flex items-center space-x-4">
-                            <span>{{ Auth::user()->name }}</span>
+                        <div class="d-flex align-items-center">
+                            <span class="me-3">{{ Auth::user()->name }}</span>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-                                    Log Out
-                                </button>
+                                <button type="submit" class="btn btn-danger">Log Out</button>
                             </form>
                         </div>
                     @endauth
@@ -80,10 +66,12 @@
             </div>
         </header>
 
-        <main class="pl-8 pr-8 pt-2 pb-2">
+        <main class="container py-3">
             @yield('content')
         </main>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

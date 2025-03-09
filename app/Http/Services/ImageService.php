@@ -7,14 +7,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageService
 {
-    public static function moveImage(UploadedFile $image, string $path, string $fileName = null)
+    public static function moveImage(\Illuminate\Http\UploadedFile $image, string $path, string $fileName = null)
     {
-        $newImage = $image->move($path, $fileName == null ? $image->getClientOriginalName() : $fileName);
-        if (!File::exists($newImage->getPathName())) {
-            abort(500, 'File not uploaded');
-        }
 
-        return $newImage;
+        if(!$image->move($path, $image->getClientOriginalName()))
+            return false;
+
+//        $newImage = $image->move($path, $fileName == null ? $image->getClientOriginalName() : $fileName);
+//        if (!File::exists($newImage->getPathName())) {
+//            abort(500, 'File not uploaded');
+//        }
+
+        return true;
     }
     public static function deleteImage(string $path): bool
     {
