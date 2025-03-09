@@ -4,9 +4,7 @@
     {{$product->title}}
 @endsection
 
-@section('scripts')
-    <script src="{{asset('js/pages/product.js')}}"></script>
-@endsection
+@vite('resources/js/pages/product.js')
 
 @section('content')
     <div class="container mt-5">
