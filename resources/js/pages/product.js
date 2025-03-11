@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     buyButton.addEventListener('click', function (event) {
         event.preventDefault();
-        console.log('added to cart')
     });
 
 

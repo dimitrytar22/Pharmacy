@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 price,
                 imageUrl
             };
-            addItemToCart(data);
+            updateCart(data);
         });
     });
     cart.addEventListener('click', function (event) {
@@ -52,20 +52,30 @@ document.addEventListener('DOMContentLoaded', function () {
         cartModal._element.setAttribute('inert', '');
     });
 
-
-    function addItemToCart(data) {
+    function updateCart(data){
+        let items = addItemToStorage(data);
+        addItemToCart(data);
+        if(items){
+            cartItemsCount.innerText = items;
+        }
+    }
+    function addItemToStorage(data){
+        let storedItems;
         if (!localStorage.getItem('items')) {
             localStorage.setItem('items', JSON.stringify(data));
         } else {
-            let storedItems = JSON.parse(localStorage.getItem('items'));
+                storedItems = JSON.parse(localStorage.getItem('items'));
             if (Array.isArray(storedItems)) {
                 storedItems.push(data);
             } else {
                 storedItems = [storedItems];
-                console.log(storedItems)
                 storedItems.push(data);
             }
+                localStorage.setItem('items', JSON.stringify(storedItems));
         }
+        return storedItems.length ?? false;
+    }
+    function addItemToCart(data) {
         let item = document.createElement('div');
         item.className = 'card item-card rounded-3 mb-4';
         item.innerHTML = `<div class="card-body p-4">
