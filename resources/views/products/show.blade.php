@@ -13,17 +13,17 @@
         </a>
         <button id="scrollToTopBtn" class="btn btn-primary scroll-to-top">&#8679;</button>
 
-        <section id="product-details" class="py-5 bg-light rounded-3 shadow-sm">
+        <section id="product-details" class="py-5 bg-light rounded-3 shadow-sm product-card" data-id="{{$product->id}}">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="card shadow-lg border-0">
+                            <div class="card shadow-lg border-0 product-image-url">
                             <img src="{{$product->image == null ? 'https://picsum.photos/600/400' : asset('images/' . $product->image) }}" class="card-img-top rounded" alt="Product Image">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card-body">
-                            <h1 class="card-title text-primary">{{$product->title}}</h1>
+                            <h1 class="card-title product-title text-primary">{{$product->title}}</h1>
                             <p class="card-text text-muted">Effective relief from pain, inflammation, and fever. Trusted for over 30 years in managing pain symptoms.</p>
                             <h2 class="h5 mt-4">Key Features:</h2>
                             <ul class="list-group list-group-flush">
@@ -38,7 +38,7 @@
                             <p>{!! html_entity_decode($product->instruction) !!}</p>
 
                             <div class="d-flex justify-content-between align-items-center mt-4">
-                                <span class="h3 text-primary">{{$product->price}} ₴</span>
+                                    <span class="h3 text-primary product-price">{{$product->price}} ₴</span>
                                 <button class="btn btn-lg btn-primary buy-button mt-2 add-to-cart">
                                     Add to cart
                                     <i class="fas fa-shopping-cart"></i>

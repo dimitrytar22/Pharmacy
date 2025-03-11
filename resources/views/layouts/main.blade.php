@@ -9,7 +9,7 @@
 
 
 
-    @vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js', 'resources/js/pages/cart.js'])
 </head>
 <body class="bg-light text-dark">
 
