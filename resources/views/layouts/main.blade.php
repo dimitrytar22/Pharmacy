@@ -27,8 +27,16 @@
                 <li class="nav-item"><a href="#services" class="nav-link text-dark">Services</a></li>
                 <li class="nav-item"><a href="#about" class="nav-link text-dark">About Us</a></li>
                 <li class="nav-item"><a href="{{ route('contact.create') }}" class="nav-link text-dark">Contact</a></li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark position-relative">
+                        <i class="fa-solid fa-cart-shopping cart" style="font-size: 18px; color: #007bff; margin-top: 5px;"></i>
+                        <span class="badge bg-danger position-absolute top-25 start-100 translate-middle rounded-circle items-count" style="font-size: 12px; padding: 2px 6px;" hidden></span>
+                    </a>
+                </li>
             </ul>
         </nav>
+
+
 
         <div>
             @guest()
@@ -61,6 +69,8 @@
 
 <main class="container my-4">
     @yield('content')
+    <x-cart-modal></x-cart-modal>
+
 </main>
 
 

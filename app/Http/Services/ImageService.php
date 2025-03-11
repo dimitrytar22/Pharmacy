@@ -13,11 +13,6 @@ class ImageService
         if(!$image->move($path, $image->getClientOriginalName()))
             return false;
 
-//        $newImage = $image->move($path, $fileName == null ? $image->getClientOriginalName() : $fileName);
-//        if (!File::exists($newImage->getPathName())) {
-//            abort(500, 'File not uploaded');
-//        }
-
         return true;
     }
     public static function deleteImage(string $path): bool

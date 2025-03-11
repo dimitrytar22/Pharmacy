@@ -1,3 +1,4 @@
+
 .scroll-to-top {
     position: fixed;
     bottom: 20px;
@@ -26,4 +27,7 @@
 .scroll-to-top.show {
     opacity: 1;
     visibility: visible;
+}
+ul.nav li a:hover{
+    cursor: pointer;
 }
