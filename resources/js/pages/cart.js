@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 price: items[key].price,
                 imageUrl: items[key].imageUrl
             };
-            addItemToCart(data);
+            cartItemsCount.innerText = addItemToCart(data);
+
+
         });
     }
 
@@ -38,9 +40,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 price,
                 imageUrl
             };
-            updateCart(data);
+            cartItemsCount.removeAttribute('hidden');
+            cartItemsCount.innerText = addItemToStorage(data) ?? 0;
+            addItemToCart(data);
+
         });
     });
+    itemsBlock.addEventListener('click', function (event) {
+        let elem = event.target;
+
+        switch (elem.dataset.action) {
+            case 'delete':
+                let card = elem.closest('.item-card');
+                let id = card.dataset.id;
+                deleteItemFromStorage(id);
+                deleteItemFromCart(id);
+                break;
+            default:
+                break;
+        }
+    });
+
+
     cart.addEventListener('click', function (event) {
         event.preventDefault();
         cartModal.show();
@@ -52,32 +73,39 @@ document.addEventListener('DOMContentLoaded', function () {
         cartModal._element.setAttribute('inert', '');
     });
 
-    function updateCart(data){
-        let items = addItemToStorage(data);
-        addItemToCart(data);
-        if(items){
-            cartItemsCount.innerText = items;
+    function deleteItemFromCart(id) {
+        let item = itemsBlock.querySelector(`.card[data-id="${id}"]`);
+        item.remove();
+        cartItemsCount.innerText = itemsBlock.children.length;
+        if(itemsBlock.children.length <= 0){
+            cartItemsCount.setAttribute('hidden','');
         }
     }
-    function addItemToStorage(data){
+
+    function addItemToStorage(data) {
         let storedItems;
         if (!localStorage.getItem('items')) {
             localStorage.setItem('items', JSON.stringify(data));
+            storedItems = JSON.parse(localStorage.getItem('items'));
+            if(!Array.isArray(storedItems))
+                storedItems = [storedItems];
         } else {
-                storedItems = JSON.parse(localStorage.getItem('items'));
+            storedItems = JSON.parse(localStorage.getItem('items'));
             if (Array.isArray(storedItems)) {
                 storedItems.push(data);
             } else {
                 storedItems = [storedItems];
                 storedItems.push(data);
             }
-                localStorage.setItem('items', JSON.stringify(storedItems));
+            localStorage.setItem('items', JSON.stringify(storedItems));
         }
         return storedItems.length ?? false;
     }
+
     function addItemToCart(data) {
         let item = document.createElement('div');
         item.className = 'card item-card rounded-3 mb-4';
+        item.setAttribute('data-id', data.id);
         item.innerHTML = `<div class="card-body p-4">
         <div class="row d-flex justify-content-between align-items-center">
             <div class="col-md-2">
@@ -106,11 +134,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 <h5 class="mb-0">${data.price}</h5>
             </div>
             <div class="col-md-1 text-end">
-                <a href="#!" class="text-danger"><i
+                <a class="text-danger"><i data-action="delete"
                         class="fas fa-trash fa-lg"></i></a>
             </div>
         </div>
     </div>`;
         itemsBlock.append(item);
+        return itemsBlock.children.length;
+    }
+
+    function deleteItemFromStorage(id) {
+        let items = JSON.parse(localStorage.getItem('items'));
+        if (!Array.isArray(items) && items)
+            items = [items];
+        for (const key of Object.keys(items)) {
+            if (items[key].id === id) {
+                items.splice(key, 1);
+                if (items.length > 0)
+                    localStorage.setItem('items', JSON.stringify(items));
+                else
+                    localStorage.removeItem('items');
+
+                break;
+            }
+        }
     }
 });
