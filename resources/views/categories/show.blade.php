@@ -12,7 +12,7 @@
         <div class="row product-card">
             @foreach($products as $product)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="card shadow-sm h-100 d-flex flex-column">
+                    <div class="card shadow-sm h-100 d-flex flex-column product-card" data-id="{{$product->id}}">
                         <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none product-image-url">
                             <img src="{{ $product->image == null ? 'https://dummyimage.com/300x300/cccccc/000000&text=' . $product->title : asset('images/' . $product->image) }}"
                                  alt="Product Image" class="card-img-top" style="height: 200px; object-fit: cover;">

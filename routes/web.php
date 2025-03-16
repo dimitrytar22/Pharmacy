@@ -60,3 +60,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
 
     });
 });
+Route::get('/test', function (){
+    $order = \App\Models\Order::query()->find(1);
+    dd($order->totalSum());
+});
