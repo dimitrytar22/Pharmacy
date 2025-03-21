@@ -38,9 +38,17 @@ class ProductService
     {
         $data = $request->validated();
 
+
+
         /** @var UploadedFile $image */
         $image = $data['image'];
-        $data['image'] = "products/" . $image->getClientOriginalName();
+        $imageName = $image->getClientOriginalName();
+        $imageUploaded = ImageService::moveImage($image, 'images/products', $imageName);
+        if(!$imageUploaded){
+            abort(300, 'File not uploaded');
+        }
+        $data['image'] = $imageName;
+
         $product = Product::firstOrCreate([
             'title' => $data['title'],
             'instruction' => $data['instruction'],
@@ -59,9 +67,7 @@ class ProductService
             ])->id;
         }
         $product->features()->attach($featuresIds);
-        if(!ImageService::moveImage($image, 'images/products')){
-            abort(300, 'File not uploaded');
-        }
+
         return $product;
     }
 

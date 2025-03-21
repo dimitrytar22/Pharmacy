@@ -19,6 +19,13 @@ class Product extends Model
         'image',
     ];
 
+    public function getImageAttribute($value)
+    {
+
+        $baseDirectory = 'storage/images/products/';
+        return !$value ? null : asset($baseDirectory . $value);
+    }
+
     public function features()
     {
         return $this->belongsToMany(Feature::class, 'product_features');

@@ -24,7 +24,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                     <a href="{{ route('admin.categories.edit', $category->id) }}" class="text-decoration-none">
                         <div class="card shadow-sm">
-                            <img src="{{ $category->image == null ? 'https://dummyimage.com/300x300/cccccc/000000&text=' . $category->title : asset('images/' . $category->image) }}" class="card-img-top" alt="Category Image">
+                            <img src="{{ $category->image == null ? 'https://dummyimage.com/300x300/cccccc/000000&text=' . $category->title : asset( $category->image) }}" class="card-img-top" alt="Category Image">
                             <div class="card-body">
                                 <h5 class="card-title text-dark">{{ $category->title }}</h5>
                             </div>

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +36,10 @@ Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
     Route::get('/{category}', [\App\Http\Controllers\CategoryController::class, 'show'])->name('show');
 
 });
+
+Route::group(['prefix' => 'orders', 'as' => 'orders.'], function (){
+   Route::post('/store', [OrderController::class, 'proceed'])->name('proceed')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+});
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 
@@ -61,6 +65,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     });
 });
 Route::get('/test', function (){
-    $order = \App\Models\Order::query()->find(1);
-    dd($order->totalSum());
+    return response()->json(123);
 });

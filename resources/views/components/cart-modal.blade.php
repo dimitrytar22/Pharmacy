@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Shopping Cart</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close close-button" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <section class="h-100">
@@ -36,20 +36,21 @@
                                     </div>
                                 </div>
 
-                                <div class="card">
-                                    <div class="card-body">
-                                        <button class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary btn-block btn-lg close-button">Close</button>
+                <form action="{{route('orders.proceed')}}">
+                    @csrf
+                    <button type="submit" class="btn btn-warning btn-block btn-lg pay-button">Proceed to Pay</button>
+
+                </form>
             </div>
         </div>
     </div>
 </div>
+@vite('resources/js/pages/cart.js')

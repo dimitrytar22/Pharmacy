@@ -27,13 +27,18 @@ class CategoryService
     }
     public function store(StoreCategoryRequest $request) : Category
     {
-
-        $title = $request->input('title');
-        $image = ImageService::moveImage($request->file('image'),'images/categories');
-        return Category::create([
-            'title' => $title,
-            'image' => 'categories/'.$image->getFilename(),
-        ]);
+        $data = $request->validated();
+        $image = $data['image'];
+        $imageName = $image->getClientOriginalName();
+        $imageUploaded = ImageService::moveImage($image,'images/categories', $imageName);
+        if(!$imageUploaded){
+            abort(300, 'File not uploaded');
+        }
+        $data['image'] = $imageName;
+        return Category::firstOrCreate([
+            'title' =>  $data['title'],
+            'image' => $data['image'],
+        ], $data);
     }
 
 }

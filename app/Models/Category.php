@@ -14,4 +14,11 @@ class Category extends Model
         'title',
         'image'
     ];
+
+
+    public function getImageAttribute($value)
+    {
+        $baseDirectory = 'storage/images/categories/';
+        return !$value ? null : asset($baseDirectory . $value);
+    }
 }

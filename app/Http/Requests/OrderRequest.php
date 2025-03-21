@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoryRequest extends FormRequest
+class OrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,8 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|min:3|max:256',
-            'image' => 'required|mimes:jpeg,png,jpg,svg|max:5000',
-        ];
-    }
-    public function  messages()
-    {
-        return [
-            'image.mimes' => 'You can upload only .jpeg .png .jpg .svg files!',
-            'image.max' => "Max file size 5mb!",
+            'a' => 'required',
+            'b' => 'required'
         ];
     }
 }

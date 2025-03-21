@@ -4,7 +4,6 @@
     {{$product->title}}
 @endsection
 
-@vite('resources/js/pages/product.js')
 
 @section('content')
     <div class="container mt-5">
