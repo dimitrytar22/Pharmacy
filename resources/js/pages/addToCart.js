@@ -10,12 +10,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!cartModal) {
         cartModal = new bootstrap.Modal(cartModalElement);
     }
-    const itemsBlock = cartModal._element.querySelector('.items-block');
+    const itemsBlock = cartModal._element.querySelector('.products-block');
     const addToCartButton = document.querySelectorAll('.add-to-cart');
 
-    let items = JSON.parse(localStorage.getItem('items'));
-    if (!Array.isArray(items) && items)
-        items = [items];
+    let items = JSON.parse(localStorage.getItem('products'));
+
 
 
     if (items) {
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 imageUrl: items[key].imageUrl
             };
             if (!data.id || !data.name) {
-                localStorage.removeItem('items');
+                localStorage.removeItem('products');
             } else {
                 cartItemsCount.innerText = addItemToCart(data);
             }
@@ -103,32 +102,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function addItemToStorage(data) {
-        let storedItems = localStorage.getItem('items');
-        if (!storedItems) {
-            localStorage.setItem('items', JSON.stringify(data));
-            storedItems = JSON.parse(localStorage.getItem('items'));
-            if (!Array.isArray(storedItems))
-                storedItems = [storedItems];
+        let storedProducts = localStorage.getItem('products');
+        if (!storedProducts) {
+            localStorage.setItem('products', JSON.stringify([data]));
+            storedProducts = JSON.parse(localStorage.getItem('products'));
+
         } else {
-            storedItems = JSON.parse(storedItems);
-            if (!Array.isArray(storedItems))
-                storedItems = [storedItems];
+            storedProducts = JSON.parse(storedProducts);
 
             let existingItemId = itemExistsInStorage(data);
 
             if (!existingItemId)
-                storedItems.push(data);
+                storedProducts.push(data);
             else {
-                Object.keys(storedItems).forEach((key) => {
-                    if (storedItems[key].id === existingItemId)
-                        storedItems[key].amount += data.amount;
+                Object.keys(storedProducts).forEach((key) => {
+                    if (storedProducts[key].id === existingItemId)
+                        storedProducts[key].amount += data.amount;
 
                 });
             }
 
-            localStorage.setItem('items', JSON.stringify(storedItems));
+            localStorage.setItem('products', JSON.stringify(storedProducts));
         }
-        return storedItems?.length ?? false;
+        return storedProducts?.length ?? false;
     }
 
     function addItemToCart(data) {
@@ -175,16 +171,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function deleteItemFromStorage(id) {
-        let items = JSON.parse(localStorage.getItem('items'));
+        let items = JSON.parse(localStorage.getItem('products'));
         if (!Array.isArray(items) && items)
             items = [items];
         for (const key of Object.keys(items)) {
             if (items[key].id === id) {
                 items.splice(key, 1);
                 if (items.length > 0)
-                    localStorage.setItem('items', JSON.stringify(items));
+                    localStorage.setItem('products', JSON.stringify(items));
                 else
-                    localStorage.removeItem('items');
+                    localStorage.removeItem('products');
 
                 break;
             }
@@ -192,14 +188,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function itemExistsInStorage(item) {
-        let storedItems = JSON.parse(localStorage.getItem('items'));
-        if (!Array.isArray(storedItems))
-            storedItems = [storedItems];
+        let storedProducts = JSON.parse(localStorage.getItem('products'));
+        if (!Array.isArray(storedProducts))
+            storedProducts = [storedProducts];
         let itemExists = false;
 
-        Object.keys(storedItems).forEach((key) => {
-            if (item.id === storedItems[key].id) {
-                itemExists = storedItems[key].id;
+        Object.keys(storedProducts).forEach((key) => {
+            if (item.id === storedProducts[key].id) {
+                itemExists = storedProducts[key].id;
             }
         });
         return itemExists;
@@ -207,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateItem(item) {
         let itemToUpdate = null;
-        let data = JSON.parse(localStorage.getItem('items'));
+        let data = JSON.parse(localStorage.getItem('products'));
         if (!Array.isArray(data))
             data = [data];
 
@@ -216,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data[key] = item;
             }
         });
-        localStorage.setItem('items', JSON.stringify(data));
+        localStorage.setItem('products', JSON.stringify(data));
     }
 
 });

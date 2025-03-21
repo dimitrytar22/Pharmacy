@@ -38,7 +38,7 @@ Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
 });
 
 Route::group(['prefix' => 'orders', 'as' => 'orders.'], function (){
-   Route::post('/store', [OrderController::class, 'proceed'])->name('proceed')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+   Route::post('/store', [OrderController::class, 'store'])->name('store');
 });
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');

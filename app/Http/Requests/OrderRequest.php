@@ -22,8 +22,9 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'a' => 'required',
-            'b' => 'required'
+            'products' => 'required',
+            'discount' => 'max:255',
+            'payment_method' => 'required|max:255',
         ];
     }
 }

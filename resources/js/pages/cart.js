@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const payButton = cartModalElement.querySelector('.pay-button');
 
 
-
     cartModal._element.setAttribute('inert', '');
 
     closeButtons.forEach(button => {
@@ -22,8 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-
-
     cartModal._element.addEventListener('show.bs.modal', function () {
         cartModal._element.removeAttribute('inert');
     });
@@ -31,23 +28,33 @@ document.addEventListener('DOMContentLoaded', function () {
         cartModal._element.setAttribute('inert', '');
     });
 
-    payButton.addEventListener('click', async function (event){
+    payButton.addEventListener('click', async function (event) {
         event.preventDefault();
-        const form = event.target.closest('form');
+        const form = cartModalElement.querySelector('.payment-form');
         const url = form.action;
+        let products = JSON.parse(localStorage.getItem('products'));
+        products = products.map((element) => {
+            return {id: element.id, amount: element.amount};
+        });
+
+        // let discount = cartModalElement.querySelector('');
+        let order = {
+            products,
+            discount: 3,
+            payment_method: 'paypal',
+        };
         const response = await fetch(url, {
-           headers: {
-               "Content-Type": "application/json",
-           } ,
+            headers: {
+                "Content-Type": "application/json",
+            },
             method: "POST",
             body: JSON.stringify({
                 _token: form.querySelector('input[name="_token"]').value,
-                a: 1,
-                b: 3
+                ...order
             }),
         });
         const json = await response.json();
-        if(response.ok){
+        if (response.ok) {
             console.log(json);
         }
     });
