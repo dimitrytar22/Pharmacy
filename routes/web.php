@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,15 +38,18 @@ Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
 
 });
 
-Route::group(['prefix' => 'orders', 'as' => 'orders.'], function (){
-   Route::post('/store', [OrderController::class, 'store'])->name('store');
+Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
+    Route::post('/store', [OrderController::class, 'store'])->name('store');
+});
+Route::group(['prefix' => 'discounts', 'as' => 'discounts.'], function (){
+    Route::post('/check', [\App\Http\Controllers\DiscountController::class, 'check'])->name('check');
 });
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function (){
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function () {
     Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
-    Route::group(['prefix' => 'categories', 'as' => 'categories.'], function (){
+    Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('index');
         Route::get('/{category}/edit', [\App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('edit');
         Route::put('/{category}', [\App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('update');
@@ -53,7 +57,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
         Route::post('/', [\App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('store');
 
     });
-    Route::group(['prefix' => 'products', 'as' => 'products.'], function (){
+    Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('index');
         Route::get('/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('create');
         Route::get('/{product}/edit', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('edit');
@@ -64,6 +68,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
 
     });
 });
-Route::get('/test', function (){
+Route::get('/test', function () {
     return response()->json(123);
 });

@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cartModalElement = document.querySelector('.cart-modal');
+    const discountApplyButton = cartModalElement.querySelector('.discount-apply-button');
+    const closeButtons = cartModalElement.querySelectorAll('.close-button');
+    const payButton = cartModalElement.querySelector('.pay-button');
 
     if (!cartModalElement) return;
 
@@ -8,8 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!cartModal) {
         cartModal = new bootstrap.Modal(cartModalElement);
     }
-    const closeButtons = cartModalElement.querySelectorAll('.close-button');
-    const payButton = cartModalElement.querySelector('.pay-button');
 
 
     cartModal._element.setAttribute('inert', '');
@@ -27,9 +28,12 @@ document.addEventListener('DOMContentLoaded', function () {
     cartModal._element.addEventListener('hide.bs.modal', function () {
         cartModal._element.setAttribute('inert', '');
     });
+    cartModal._element.addEventListener('hidden.bs.modal', function () {
+        const errorBlock = this.querySelector('.error-message');
+        errorBlock.setAttribute('hidden', '');
+    });
 
     payButton.addEventListener('click', async function (event) {
-        event.preventDefault();
         const form = cartModalElement.querySelector('.payment-form');
         const url = form.action;
         let products = JSON.parse(localStorage.getItem('products'));
@@ -59,5 +63,56 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    discountApplyButton.addEventListener('click', async function (event) {
+        const form = cartModalElement.querySelector('.discount-apply-form');
+        const discountTitle = form.querySelector('.discount-title').value;
+        const errorBlock = form.querySelector('.error-message');
+        if (!discountTitle)
+            return;
+        const url = form.action;
+
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify({
+                _token: form.querySelector('input[name="_token"]').value,
+                'discount': discountTitle,
+            }),
+        });
+        const json = await response.json();
+        if (response.ok) {
+            console.log(json);
+            if (json.status) {
+                errorBlock.setAttribute('hidden', '');
+                applyDiscount(json.data.discount.size);
+
+            } else {
+                errorBlock.innerText = json.error.message;
+                errorBlock.removeAttribute('hidden');
+            }
+        } else {
+            errorBlock.innerText = "Error";
+            errorBlock.removeAttribute('hidden');
+        }
+
+
+    });
+
+    function applyDiscount(size){
+        discountApplyButton.classList.add('applied');
+        let percentageBlock = cartModalElement.querySelector('.discount-percentage');
+        let percentageText = percentageBlock.querySelector('.text');
+        percentageText.innerText = `-${size}%`;
+        percentageBlock.removeAttribute('hidden');
+    }
+    function resetDiscount(){
+        discountApplyButton.classList.remove('applied');
+        let percentageBlock = cartModalElement.querySelector('.discount-percentage');
+        let percentageText = percentageBlock.querySelector('.text');
+        percentageText.innerText = ``;
+        percentageBlock.setAttribute('hidden', '');
+    }
 
 });

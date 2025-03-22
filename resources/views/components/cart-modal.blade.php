@@ -12,8 +12,6 @@
                     <div class="container h-100 py-5">
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <div class="col-12 col-md-10 products">
-                                <form action="{{route('orders.store')}}" class="payment-form">
-                                    @csrf
 
                                     <div class="d-flex justify-content-between align-items-center mb-4">
                                         <h3 class="fw-normal mb-0">Shopping Cart</h3>
@@ -23,24 +21,38 @@
                                                     <i class="fas fa-angle-down mt-1"></i></a></p>
                                         </div>
                                     </div>
+                                <form action="{{route('orders.store')}}" class="payment-form">
+                                    @csrf
                                     <div class="products-block">
                                     </div>
+                                </form>
 
-                                    <div class="card rounded-3 mb-4">
-                                        <div class="card-body p-4">
-                                            <div class="row justify-content-between align-items-center">
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control form-control-lg"
+                                <div class="card rounded-3 mb-4">
+                                    <div class="card-body p-4">
+                                        <form action="{{asset(route('discounts.check'))}}" class="discount-apply-form">
+                                            @csrf
+                                            <div class="row align-items-center">
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control form-control-lg discount-title"
                                                            placeholder="Discount code">
                                                 </div>
-                                                <div class="col-md-4 text-end">
-                                                    <button class="btn btn-outline-warning btn-lg">Apply</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </form>
+                                                <div class="col-md-2 text-center discount-percentage" hidden>
+                                                    <span class="badge bg-success p-2 w-100 text"></span>
+                                                </div>
+
+                                                <div class="col-md-4 text-end">
+                                                    <button class="discount-apply-button" type="button">Apply</button>
+                                                </div>
+
+                                                <div class="alert alert-danger m-2 error-message" role="alert" hidden></div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -49,7 +61,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-block btn-lg close-button">Close</button>
 
-                <button type="submit" class="btn btn-warning btn-block btn-lg pay-button">Proceed to Pay</button>
+                <button type="button" class="btn btn-warning btn-block btn-lg pay-button">Proceed to Pay</button>
 
             </div>
         </div>
