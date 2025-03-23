@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 deleteItemFromCart(id);
                 break;
             case 'decrease':
-                amountChange.value = -1;
                 if (amount.value <= 1)
                     return;
                 amount.value--;
@@ -86,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 break;
             case 'increase':
-                amountChange.value = 1;
                 amount.value++;
                 amount.dispatchEvent(amountChange);
 
@@ -213,18 +211,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return itemExists;
     }
 
-    function updateItem(item) {
-        let itemToUpdate = null;
-        let data = JSON.parse(localStorage.getItem('products'));
-        if (!Array.isArray(data))
-            data = [data];
 
-        Object.keys(data).forEach((key) => {
-            if (data[key].id === item.id) {
-                data[key] = item;
-            }
-        });
-        localStorage.setItem('products', JSON.stringify(data));
-    }
 
 });

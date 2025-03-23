@@ -26,10 +26,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     productAmount.forEach((item)=>{
         item.addEventListener('change', function (event){
-            console.log(event.target.value);
+            let inputField = event.target;
+            let value = inputField.value;
+            if(!Number(value))
+                return;
+            console.log(inputField);
+            let id = item.closest('.product').dataset.id;
+            let name = item.closest('.product').querySelector('.product-name').innerText;
+            let price = item.closest('.product').querySelector('.product-price').innerText;
+            let amount = item.closest('.product').querySelector('.product-amount').value;
+            let imageUrl = item.closest('.product').querySelector('.product-imageUrl').src;
+            let product = {
+                id,
+                name,
+                price,
+                amount,
+                imageUrl
+            };
+            updateProductInStorage(product);
         });
     });
 
+    function updateProductInStorage(product) {
+        let data = JSON.parse(localStorage.getItem('products'));
+        if (!Array.isArray(data))
+            data = [data];
+
+        Object.keys(data).forEach((key) => {
+            if (data[key].id === product.id) {
+                data[key] = product;
+            }
+        });
+        localStorage.setItem('products', JSON.stringify(data));
+    }
 
     cartModal._element.addEventListener('show.bs.modal', function () {
         cartModal._element.removeAttribute('inert');
