@@ -19,12 +19,12 @@ class Product extends Model
         'image',
     ];
 
-    private $imageDir =  "images/products/";
+    public static $imageDir =  "images/products/";
 
     public function getImageAttribute($value)
     {
 
-        $baseDirectory = 'storage/'. $this->imageDir;
+        $baseDirectory = 'storage/'. self::$imageDir;
         return !$value ? null : asset($baseDirectory . $value);
     }
 
@@ -33,8 +33,5 @@ class Product extends Model
         return $this->belongsToMany(Feature::class, 'product_features');
     }
 
-    public function getImageDir()
-    {
-        return $this->imageDir;
-    }
+
 }

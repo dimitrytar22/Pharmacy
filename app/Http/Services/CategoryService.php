@@ -18,9 +18,9 @@ class CategoryService
         $oldImageName = basename($category->image);
         $newImageName = $image->getClientOriginalName();
         if (!ImageService::imageExistsInDB($category, $oldImageName))
-            ImageService::deleteImage($category->getImageDir() . $oldImageName);
+            ImageService::deleteImage(Category::$imageDir  . $oldImageName);
 
-        $newImage = ImageService::moveImage($image, $category->getImageDir(), $newImageName);
+        $newImage = ImageService::moveImage($image, Category::$imageDir , $newImageName);
         if (!$newImage) {
             abort(500, 'File not uploaded');
         }
@@ -50,7 +50,7 @@ class CategoryService
     public function destroy(Category $category)
     {
         if (!ImageService::imageExistsInDB($category, basename($category->image)))
-            ImageService::deleteImage($category->getImageDir() . basename($category->image));
+            ImageService::deleteImage(Category::$imageDir . basename($category->image));
         $category->delete();
     }
 }

@@ -17,10 +17,10 @@ class ProductService
 
         $oldImageName = basename($product->image);
         $newImageName = $image->getClientOriginalName();
-        if (!ImageService::imageExistsInDB(Product::class, $oldImageName))
-            ImageService::deleteImage($product->getImageDir() . $oldImageName);
+        if (!ImageService::imageExistsInDB($product, $oldImageName))
+            ImageService::deleteImage(Product::$imageDir . $oldImageName);
 
-        $newImage = ImageService::moveImage($image, $product->getImageDir(), $newImageName);
+        $newImage = ImageService::moveImage($image, Product::$imageDir, $newImageName);
         if (!$newImage) {
             abort(500, 'File not uploaded');
         }
@@ -82,7 +82,7 @@ class ProductService
     public function destroy(Product $product)
     {
         if (!ImageService::imageExistsInDB($product, basename($product->image)))
-            ImageService::deleteImage($product->getImageDir() . basename($product->image));
+            ImageService::deleteImage(Product::$imageDir . basename($product->image));
         $product->delete();
     }
 }
