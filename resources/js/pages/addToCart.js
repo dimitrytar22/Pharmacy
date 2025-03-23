@@ -69,20 +69,27 @@ document.addEventListener('DOMContentLoaded', function () {
         let card = elem.closest('.item-card');
         let id = card.dataset.id;
         let amount = card.querySelector('.product-amount');
+
+        let amountChange = new Event('change');
         switch (elem.dataset.action) {
             case 'delete':
                 deleteItemFromStorage(id);
                 deleteItemFromCart(id);
                 break;
             case 'decrease':
+                amountChange.value = -1;
                 if (amount.value <= 1)
                     return;
                 amount.value--;
-                updateItem()
+                amount.dispatchEvent(amountChange);
+
 
                 break;
             case 'increase':
+                amountChange.value = 1;
                 amount.value++;
+                amount.dispatchEvent(amountChange);
+
 
 
                 break;
@@ -151,8 +158,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     <i class="fas fa-minus reduce-product" data-action="decrease"></i>
 
-                <input min="1" name="quantity" value="${data.amount}"
-                       type="number" class="form-control form-control-sm product-amount"/>
+               <input name="quantity" value="${data.amount}"
+       type="text" inputmode="numeric" pattern="\d*"
+       class="form-control form-control-sm product-amount"
+       oninput="this.value = this.value.replace(/^0+/, '').replace(/[^0-9]/g, '')">
+
+
+
 
 
                     <i class="fas fa-plus increase-product" data-action="increase"></i>

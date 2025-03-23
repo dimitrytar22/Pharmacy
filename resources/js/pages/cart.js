@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeButtons = cartModalElement.querySelectorAll('.close-button');
     const payButton = cartModalElement.querySelector('.pay-button');
     const resetDiscountButton = cartModalElement.querySelector('.reset-discount-button');
+    const productAmount = cartModalElement.querySelectorAll('.product-amount');
 
 
     if (!cartModalElement) return;
@@ -20,6 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
     closeButtons.forEach(button => {
         button.addEventListener('click', function () {
             cartModal.hide();
+        });
+    });
+
+    productAmount.forEach((item)=>{
+        item.addEventListener('change', function (event){
+            console.log(event.target.value);
         });
     });
 
@@ -141,6 +148,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
+    function cartEmpty(){
+        return !Boolean(cartModalElement.querySelectorAll('.product').length);
+    }
     function discountSet() {
         return Boolean(localStorage.getItem('discount'));
     }

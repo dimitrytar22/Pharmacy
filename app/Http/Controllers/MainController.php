@@ -9,7 +9,7 @@ class MainController extends Controller
 {
     public function  index()
     {
-        $categories = Category::all()->random(4);
+        $categories = Category::query()->limit(4)->get();
         return view('main', compact('categories'));
     }
 }
