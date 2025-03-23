@@ -34,9 +34,4 @@
             @endforeach
         </div>
     </div>
-    <script>
-        document.querySelector('[role="button"]').addEventListener('click', function () {
-            this.closest('div[role="alert"]').remove();
-        });
-    </script>
 @endsection

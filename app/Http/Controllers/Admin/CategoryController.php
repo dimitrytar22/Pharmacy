@@ -43,4 +43,10 @@ class CategoryController extends Controller
         $this->service->store($request);
         return redirect()->route('admin.categories.index')->with('success', 'Category created successfully!');
     }
+
+    public function destroy(Category $category)
+    {
+        $this->service->destroy($category);
+        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully!');
+    }
 }

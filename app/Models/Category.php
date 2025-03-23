@@ -15,10 +15,15 @@ class Category extends Model
         'image'
     ];
 
-
+    private $imageDir =  "images/categories/";
     public function getImageAttribute($value)
     {
-        $baseDirectory = 'storage/images/categories/';
+        $baseDirectory = 'storage/'. $this->imageDir;
         return !$value ? null : asset($baseDirectory . $value);
+    }
+
+    public function getImageDir()
+    {
+        return $this->imageDir;
     }
 }

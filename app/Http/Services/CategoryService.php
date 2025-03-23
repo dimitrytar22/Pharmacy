@@ -11,34 +11,46 @@ class CategoryService
 {
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $title = $request->input('title');
-        $image = $request->file('image');
-        if ($image != null) {
-            $oldImagePath = 'images/' . $category->image;
+        $data = $request->validated();
+        $image = $data['image'];
+        $title = $data['title'];
 
-            ImageService::deleteImage($oldImagePath);
-            $newImage = ImageService::moveImage($image,'images/categories');
+        $oldImageName = basename($category->image);
+        $newImageName = $image->getClientOriginalName();
+        if (!ImageService::imageExistsInDB($category, $oldImageName))
+            ImageService::deleteImage($category->getImageDir() . $oldImageName);
 
-            $category->image = 'categories/' . $newImage->getFilename();
+        $newImage = ImageService::moveImage($image, $category->getImageDir(), $newImageName);
+        if (!$newImage) {
+            abort(500, 'File not uploaded');
         }
+        $category->image = $newImageName;
+
 
         $category->title = $title;
         $category->save();
     }
-    public function store(StoreCategoryRequest $request) : Category
+
+    public function store(StoreCategoryRequest $request): Category
     {
         $data = $request->validated();
         $image = $data['image'];
         $imageName = $image->getClientOriginalName();
-        $imageUploaded = ImageService::moveImage($image,'images/categories', $imageName);
-        if(!$imageUploaded){
-            abort(300, 'File not uploaded');
+        $imageUploaded = ImageService::moveImage($image, 'images/categories', $imageName);
+        if (!$imageUploaded) {
+            abort(500, 'File not uploaded');
         }
         $data['image'] = $imageName;
         return Category::firstOrCreate([
-            'title' =>  $data['title'],
+            'title' => $data['title'],
             'image' => $data['image'],
         ], $data);
     }
 
+    public function destroy(Category $category)
+    {
+        if (!ImageService::imageExistsInDB($category, basename($category->image)))
+            ImageService::deleteImage($category->getImageDir() . basename($category->image));
+        $category->delete();
+    }
 }

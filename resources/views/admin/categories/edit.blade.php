@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     <div class="container mt-4">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
@@ -22,20 +23,30 @@
 
                     <div class="mb-3">
                         <label for="image" class="form-label">Category Image</label>
-                        <input type="file" name="image" id="image" class="form-control">
+                        <input type="file" name="image" id="image" class="form-control image-select" accept="image/png, image/jpeg">
                         @if($category->image)
                             <div class="mt-3">
                                 <p class="text-muted">Current Image:</p>
-                                <img src="{{ asset('images/' . $category->image) }}" alt="Category Image" class="img-thumbnail w-25">
+                                <img src="{{ asset( $category->image) }}" alt="Category Image" class="img-thumbnail w-25 selected-image">
+                                <div class="alert alert-danger image-error" hidden role="alert">
+                                    <strong>Error!</strong> Invalid file type. Please upload an image.
+                                </div>
+
                             </div>
                         @endif
                     </div>
 
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                        <button type="submit" form="delete-form" class="btn btn-danger">Delete</button>
                     </div>
+                </form>
+                <form id="delete-form" action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
                 </form>
             </div>
         </div>
     </div>
+    @vite('resources/js/pages/imageSelect.js')
 @endsection

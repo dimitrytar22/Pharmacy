@@ -55,6 +55,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
         Route::put('/{category}', [\App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('update');
         Route::get('/create', [\App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('create');
         Route::post('/', [\App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('store');
+        Route::delete('/{category}', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('destroy');
+
 
     });
     Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
@@ -68,6 +70,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
 
     });
 });
-Route::get('/test', function () {
-    return response()->json(123);
-});
+Route::get('/forbidden', function (){
+    return view('forbidden');
+})->name('forbidden');

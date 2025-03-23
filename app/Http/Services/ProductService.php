@@ -13,12 +13,20 @@ class ProductService
     public function update(Product $product, UpdateProductRequest $request)
     {
         $data = $request->validated();
-        $image = $data['image'] ?? null;
-        if ($image != null) {
-            $data['image'] = "products/" . $image->getClientOriginalName();
-            ImageService::moveImage($image, 'images/products');
-            $product->image = $data['image'];
+        $image = $data['image'];
+
+        $oldImageName = basename($product->image);
+        $newImageName = $image->getClientOriginalName();
+        if (!ImageService::imageExistsInDB(Product::class, $oldImageName))
+            ImageService::deleteImage($product->getImageDir() . $oldImageName);
+
+        $newImage = ImageService::moveImage($image, $product->getImageDir(), $newImageName);
+        if (!$newImage) {
+            abort(500, 'File not uploaded');
         }
+        $data['image'] = $newImageName;
+
+
         $featuresIds = [];
         foreach ($data['features'] as $feature) {
             if(empty($feature['title']) || empty($feature['description']))
@@ -73,6 +81,8 @@ class ProductService
 
     public function destroy(Product $product)
     {
+        if (!ImageService::imageExistsInDB($product, basename($product->image)))
+            ImageService::deleteImage($product->getImageDir() . basename($product->image));
         $product->delete();
     }
 }

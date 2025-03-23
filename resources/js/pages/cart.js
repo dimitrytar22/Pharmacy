@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const discountApplyButton = cartModalElement.querySelector('.discount-apply-button');
     const closeButtons = cartModalElement.querySelectorAll('.close-button');
     const payButton = cartModalElement.querySelector('.pay-button');
+    const resetDiscountButton = cartModalElement.querySelector('.reset-discount-button');
+
 
     if (!cartModalElement) return;
 
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         cartModal = new bootstrap.Modal(cartModalElement);
     }
 
-
+    applyDiscount();
     cartModal._element.setAttribute('inert', '');
 
     closeButtons.forEach(button => {
@@ -86,7 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(json);
             if (json.status) {
                 errorBlock.setAttribute('hidden', '');
-                applyDiscount(json.data.discount.size);
+                localStorage.setItem('discount', JSON.stringify({
+                    id: json.data.discount.id,
+                    title: json.data.discount.title,
+                    size: json.data.discount.size
+                }));
+                applyDiscount();
 
             } else {
                 errorBlock.innerText = json.error.message;
@@ -100,19 +107,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    function applyDiscount(size){
+    function applyDiscount() {
+        if (!discountSet()) {
+            console.log('122312132');
+            return;
+        }
+        let discount = JSON.parse(localStorage.getItem('discount'));
+        let size = discount.size;
         discountApplyButton.classList.add('applied');
         let percentageBlock = cartModalElement.querySelector('.discount-percentage');
+        let discountTitle = cartModalElement.querySelector('.discount-title');
         let percentageText = percentageBlock.querySelector('.text');
         percentageText.innerText = `-${size}%`;
         percentageBlock.removeAttribute('hidden');
+        resetDiscountButton.removeAttribute('hidden');
+        discountTitle.value = discount.title;
+        discountTitle.readOnly = true;
     }
-    function resetDiscount(){
+
+    function resetDiscount() {
+        localStorage.removeItem('discount');
         discountApplyButton.classList.remove('applied');
         let percentageBlock = cartModalElement.querySelector('.discount-percentage');
         let percentageText = percentageBlock.querySelector('.text');
+        let discountTitle = cartModalElement.querySelector('.discount-title');
+
+
         percentageText.innerText = ``;
         percentageBlock.setAttribute('hidden', '');
+        resetDiscountButton.setAttribute('hidden', '');
+        discountTitle.value = "";
+        discountTitle.readOnly = false;
+
     }
+
+    function discountSet() {
+        return Boolean(localStorage.getItem('discount'));
+    }
+
+    resetDiscountButton.addEventListener('click', function () {
+        resetDiscount();
+    });
 
 });

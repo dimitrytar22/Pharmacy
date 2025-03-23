@@ -16,6 +16,7 @@ class DiscountService
                 'status' => (bool)$discount,
                 'data' => $discount ? [
                     'discount' => [
+                        'id' => $discount->id,
                         'title' => $discount->title,
                         'size' => $discount->size,
                     ]

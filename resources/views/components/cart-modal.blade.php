@@ -13,14 +13,14 @@
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <div class="col-12 col-md-10 products">
 
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <h3 class="fw-normal mb-0">Shopping Cart</h3>
-                                        <div>
-                                            <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"
-                                                                                                        class="text-body">Price
-                                                    <i class="fas fa-angle-down mt-1"></i></a></p>
-                                        </div>
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h3 class="fw-normal mb-0">Shopping Cart</h3>
+                                    <div>
+                                        <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"
+                                                                                                    class="text-body">Price
+                                                <i class="fas fa-angle-down mt-1"></i></a></p>
                                     </div>
+                                </div>
                                 <form action="{{route('orders.store')}}" class="payment-form">
                                     @csrf
                                     <div class="products-block">
@@ -33,21 +33,27 @@
                                             @csrf
                                             <div class="row align-items-center">
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control form-control-lg discount-title"
+                                                    <input type="text"
+                                                           class="form-control form-control-lg discount-title"
                                                            placeholder="Discount code">
                                                 </div>
 
-                                                <div class="col-md-2 text-center discount-percentage" hidden>
+                                                <div
+                                                    class="col-md-2 text-center discount-percentage d-flex align-items-center"
+                                                    hidden>
                                                     <span class="badge bg-success p-2 w-100 text"></span>
+                                                    <button type="button" class="btn-close ms-2 reset-discount-button"
+                                                            aria-label="Close" data-bs-toggle="tooltip"
+                                                            title="Reset discount" hidden></button>
                                                 </div>
 
                                                 <div class="col-md-4 text-end">
                                                     <button class="discount-apply-button" type="button">Apply</button>
                                                 </div>
 
-                                                <div class="alert alert-danger m-2 error-message" role="alert" hidden></div>
+                                                <div class="alert alert-danger m-2 error-message" role="alert"
+                                                     hidden></div>
                                             </div>
-
                                         </form>
                                     </div>
                                 </div>
