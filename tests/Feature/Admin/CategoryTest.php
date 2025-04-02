@@ -43,7 +43,7 @@ class CategoryTest extends TestCase
 
         $this->assertDatabaseHas('categories', [
             'title' => $categoryData['title'],
-            'image' => $categoryData['image']->name
+            'image' => 'images/categories/' . $categoryData['image']->name
         ]);
         Storage::disk('public')->assertExists('images/categories/' . $categoryData['image']->name);
         Storage::fake('public');
@@ -76,7 +76,7 @@ class CategoryTest extends TestCase
         ]);
         $this->assertDatabaseHas('categories', [
             'title' => $newCategoryData['title'],
-            'image' => $newCategoryData['image']->name
+            'image' => 'images/categories/' . $newCategoryData['image']->name
         ]);
 
         Storage::disk('public')->assertMissing('images/categories/' . $oldImage->name);
