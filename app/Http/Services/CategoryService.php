@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class CategoryService
 {
@@ -49,6 +50,7 @@ class CategoryService
 
     public function destroy(Category $category)
     {
+
         if (!ImageService::imageExistsInDB($category, $category->image))
             ImageService::deleteImage($category->image);
         $category->delete();

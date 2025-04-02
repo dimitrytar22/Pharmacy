@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -15,7 +16,6 @@ class ImageService
     }
     public static function deleteImage(string $path): bool
     {
-
         if (Storage::exists($path)) {
             Storage::delete($path);
             return true;
