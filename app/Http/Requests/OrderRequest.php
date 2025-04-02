@@ -23,7 +23,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'products' => 'required',
-            'discount' => 'max:255',
+            'discount_id' => 'integer',
             'payment_method' => 'required|max:255',
         ];
     }

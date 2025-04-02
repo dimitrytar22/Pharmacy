@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    productAmount.forEach((item)=>{
-        item.addEventListener('change', function (event){
+    productAmount.forEach((item) => {
+        item.addEventListener('change', function (event) {
             let inputField = event.target;
             let value = inputField.value;
-            if(!Number(value))
+            if (!Number(value))
                 return;
             console.log(inputField);
             let id = item.closest('.product').dataset.id;
@@ -71,35 +71,42 @@ document.addEventListener('DOMContentLoaded', function () {
         errorBlock.setAttribute('hidden', '');
     });
 
-    payButton.addEventListener('click', async function (event) {
+    payButton.addEventListener('click', function (event) {
         const form = cartModalElement.querySelector('.payment-form');
-        const url = form.action;
-        let products = JSON.parse(localStorage.getItem('products'));
-        products = products.map((element) => {
-            return {id: element.id, amount: element.amount};
+
+        let products = JSON.parse(localStorage.getItem('products')) ?? [];
+        let discount = JSON.parse(localStorage.getItem('discount')) ?? null;
+        let discountInput = document.createElement('input');
+        if (discount) {
+            discountInput.type = 'hidden';
+            discountInput.name = `discount_id`;
+            discountInput.value = discount.id;
+            form.appendChild(discountInput);
+        }
+        let paymentMethodInput = document.createElement('input');
+        paymentMethodInput.type = 'hidden';
+        paymentMethodInput.name = `payment_method`;
+        paymentMethodInput.value = 'paypal';
+        form.appendChild(paymentMethodInput);
+
+
+        products.forEach((product, index) => {
+            let idInput = document.createElement('input');
+            idInput.type = 'hidden';
+            idInput.name = `products[${index}][id]`;
+            idInput.value = product.id;
+            form.appendChild(idInput);
+
+            let amountInput = document.createElement('input');
+            amountInput.type = 'hidden';
+            amountInput.name = `products[${index}][amount]`;
+            amountInput.value = product.amount;
+            form.appendChild(amountInput);
         });
 
-        // let discount = cartModalElement.querySelector('');
-        let order = {
-            products,
-            discount: 3,
-            payment_method: 'paypal',
-        };
-        const response = await fetch(url, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify({
-                _token: form.querySelector('input[name="_token"]').value,
-                ...order
-            }),
-        });
-        const json = await response.json();
-        if (response.ok) {
-            console.log(json);
-        }
+        form.submit();
     });
+
 
     discountApplyButton.addEventListener('click', async function (event) {
         const form = cartModalElement.querySelector('.discount-apply-form');
@@ -177,9 +184,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    function cartEmpty(){
+    function cartEmpty() {
         return !Boolean(cartModalElement.querySelectorAll('.product').length);
     }
+
     function discountSet() {
         return Boolean(localStorage.getItem('discount'));
     }

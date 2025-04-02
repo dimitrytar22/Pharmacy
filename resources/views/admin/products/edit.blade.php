@@ -19,7 +19,7 @@
                            required>
                 </div>
                 @error('title')
-                <div class="alert alert-danger">{{$message}}</div>
+                <x-input-error :messages="$message"/>
                 @enderror
 
                 <div class="mb-3">
@@ -27,7 +27,7 @@
                     <textarea name="instruction" id="editor" class="form-control">{{$product->instruction}}</textarea>
                 </div>
                 @error('instruction')
-                <div class="alert alert-danger">{{$message}}</div>
+                <x-input-error :messages="$message"/>
                 @enderror
 
                 <div class="mb-3">
@@ -53,8 +53,9 @@
 
                     <div class="mt-3">
                         <p class="text-muted">Current Image:</p>
-                        <img src="{{ asset( $product->image ?? asset('/storage/images/products/default.jpg')) }}"
-                             alt="Category Image" class="img-thumbnail w-25 selected-image">
+                        <img
+                            src="{{ asset("storage/". $product->image ?? asset('/storage/images/products/default.jpg')) }}"
+                            alt="Category Image" class="img-thumbnail w-25 selected-image">
                         <div class="alert alert-danger image-error" hidden role="alert">
                             <strong>Error!</strong> Invalid file type. Please upload an image.
                         </div>
@@ -62,7 +63,7 @@
                     </div>
                 </div>
                 @error('image')
-                <div class="alert alert-danger">{{$message}}</div>
+                <x-input-error :messages="$message"/>
                 @enderror
 
                 <div class="mb-3">
@@ -74,7 +75,7 @@
                     </select>
                 </div>
                 @error('category_id')
-                <div class="alert alert-danger">{{$message}}</div>
+                <x-input-error :messages="$message"/>
                 @enderror
 
                 <div class="mb-3">
@@ -83,7 +84,7 @@
                            required>
                 </div>
                 @error('price')
-                <div class="alert alert-danger">{{$message}}</div>
+                <x-input-error :messages="$message"/>
                 @enderror
 
                 <div class="mb-3">
@@ -92,7 +93,7 @@
                            required>
                 </div>
                 @error('count')
-                <div class="alert alert-danger">{{$message}}</div>
+                <x-input-error :messages="$message"/>
                 @enderror
 
                 <div class="d-flex justify-content-between">

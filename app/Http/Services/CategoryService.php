@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 
 class CategoryService
@@ -12,26 +13,28 @@ class CategoryService
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $data = $request->validated();
-        $image = $data['image'];
         $title = $data['title'];
+        $image = $data['image'] ?? null;
 
-        $oldImageName = basename($category->image);
-        $newImageName = $image->getClientOriginalName();
-        if (!ImageService::imageExistsInDB($category, $oldImageName))
-            ImageService::deleteImage(Category::$imageDir  . $oldImageName);
+        if($image){
+            $oldImageName = basename($category->image);
+            $newImageName = $image->getClientOriginalName();
+            if (!ImageService::imageExistsInDB($category, $category->image))
+                ImageService::deleteImage($category->image);
 
-        $newImage = ImageService::moveImage($image, Category::$imageDir , $newImageName);
-        if (!$newImage) {
-            abort(500, 'File not uploaded');
+            $newImage = ImageService::moveImage($image, 'images/categories/' , $newImageName);
+            if (!$newImage) {
+                abort(500, 'File not uploaded');
+            }
+            $category->image = "images/categories/". $newImageName;
         }
-        $category->image = $newImageName;
 
 
         $category->title = $title;
         $category->save();
     }
 
-    public function store(StoreCategoryRequest $request): Category
+    public function store(StoreCategoryRequest $request): Model
     {
         $data = $request->validated();
         $image = $data['image'];
@@ -40,17 +43,14 @@ class CategoryService
         if (!$imageUploaded) {
             abort(500, 'File not uploaded');
         }
-        $data['image'] = $imageName;
-        return Category::firstOrCreate([
-            'title' => $data['title'],
-            'image' => $data['image'],
-        ], $data);
+        $data['image'] = "images/categories/".$imageName;
+        return Category::query()->create($data);
     }
 
     public function destroy(Category $category)
     {
-        if (!ImageService::imageExistsInDB($category, basename($category->image)))
-            ImageService::deleteImage(Category::$imageDir . basename($category->image));
+        if (!ImageService::imageExistsInDB($category, $category->image))
+            ImageService::deleteImage($category->image);
         $category->delete();
     }
 }

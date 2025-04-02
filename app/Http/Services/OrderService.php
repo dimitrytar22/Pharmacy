@@ -12,6 +12,8 @@ class OrderService
     {
         $data = $request->validated();
         $data['user_id'] = Auth::user()->id;
+        if(!$data['discount_id'])
+            unset($data['discount_id']);
         $order = Order::query()->create($data);
         return $order->id;
     }

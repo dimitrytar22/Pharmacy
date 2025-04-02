@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     <i class="fas fa-minus reduce-product" data-action="decrease"></i>
 
-               <input name="quantity" value="${data.amount}"
+               <input  value="${data.amount}"
        type="text" inputmode="numeric" pattern="\d*"
        class="form-control form-control-sm product-amount"
        oninput="this.value = this.value.replace(/^0+/, '').replace(/[^0-9]/g, '')">

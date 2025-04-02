@@ -19,14 +19,6 @@ class Product extends Model
         'image',
     ];
 
-    public static $imageDir =  "images/products/";
-
-    public function getImageAttribute($value)
-    {
-
-        $baseDirectory = 'storage/'. self::$imageDir;
-        return !$value ? null : asset($baseDirectory . $value);
-    }
 
     public function features()
     {

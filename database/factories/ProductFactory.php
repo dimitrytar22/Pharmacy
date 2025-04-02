@@ -22,7 +22,8 @@ class ProductFactory extends Factory
             'price' => rand(10,3000),
             'instruction' => $this->faker->text(500),
             'count' => rand(0,1000),
-            'category_id' => Category::all()->random(1)->first()->id
+            'category_id' => Category::all()->random(1)->first()->id,
+            'image' => 'images/products/default.jpg'
         ];
     }
 }

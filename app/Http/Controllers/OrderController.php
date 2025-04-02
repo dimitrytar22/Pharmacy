@@ -13,8 +13,9 @@ class OrderController extends Controller
     {
     }
 
-    public function store(OrderRequest $request)
+    public function checkout(OrderRequest $request)
     {
+        dd($request->validated());
         return response()->json([
             'id' => $this->service->store($request)
         ]);

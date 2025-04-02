@@ -12,28 +12,38 @@
                 <h5 class="mb-0">Edit Category: {{ $category->title }}</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.categories.update', $category->id) }}" method="POST"
+                      enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Category Title</label>
-                        <input type="text" name="title" id="title" value="{{ $category->title }}" class="form-control" required>
+                        <input type="text" name="title" id="title" value="{{ $category->title }}" class="form-control"
+                               required>
                     </div>
+                    @error('title')
+                    <x-input-error :messages="$message"/>
+                    @enderror
 
                     <div class="mb-3">
                         <label for="image" class="form-label">Category Image</label>
-                        <input type="file" name="image" id="image" class="form-control image-select" accept="image/png, image/jpeg">
+                        <input type="file" name="image" id="image" class="form-control image-select"
+                               accept="image/png, image/jpeg">
                         @if($category->image)
                             <div class="mt-3">
                                 <p class="text-muted">Current Image:</p>
-                                <img src="{{ asset( $category->image) }}" alt="Category Image" class="img-thumbnail w-25 selected-image">
+                                <img src="{{ asset("storage/". $category->image) }}" alt="Category Image"
+                                     class="img-thumbnail w-25 selected-image">
                                 <div class="alert alert-danger image-error" hidden role="alert">
                                     <strong>Error!</strong> Invalid file type. Please upload an image.
                                 </div>
 
                             </div>
                         @endif
+                        @error('image')
+                        <x-input-error :messages="$message"/>
+                        @enderror
                     </div>
 
                     <div class="d-flex justify-content-between">

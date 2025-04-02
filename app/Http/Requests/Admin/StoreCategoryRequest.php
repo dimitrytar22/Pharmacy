@@ -22,15 +22,19 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|min:3|max:256',
+            'title' => 'required|min:3|max:255|unique:categories,title',
             'image' => 'required|mimes:jpeg,png,jpg,svg|max:5000',
         ];
     }
     public function  messages()
     {
         return [
+            'title.required' => 'Title is required',
+            'title.min' => 'Title should be more at least 3 symbols',
+            'title.max' => 'Title should be more less than 256 symbols',
+            'image.required' => 'Image is required',
             'image.mimes' => 'You can upload only .jpeg .png .jpg .svg files!',
-            'image.max' => "Max file size 5mb!",
+            'image.max' => "Max image size 5mb!",
         ];
     }
 }

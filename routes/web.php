@@ -39,7 +39,7 @@ Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
 });
 
 Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
-    Route::post('/store', [OrderController::class, 'store'])->name('store');
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 });
 Route::group(['prefix' => 'discounts', 'as' => 'discounts.'], function (){
     Route::post('/check', [\App\Http\Controllers\DiscountController::class, 'check'])->name('check');

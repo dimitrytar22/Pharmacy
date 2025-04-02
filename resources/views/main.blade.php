@@ -22,7 +22,7 @@
                     <div class="col-md-3 mb-4">
                         <a href="{{route('categories.show', $category->id)}}">
                             <div class="card shadow">
-                                <img src="{{$category->image == null  ? "https://dummyimage.com/300x300/cccccc/000000&text=$category->title" : asset($category->image)}}"
+                                <img src="{{$category->image == null  ? "https://dummyimage.com/300x300/cccccc/000000&text=$category->title" : asset("storage/".$category->image)}}"
                                      class="card-img-top" alt="{{$category->title}}" style="height: 200px; object-fit: cover;">
                                 <div class="card-body">
                                     <h5 class="card-title">{{$category->title}}</h5>

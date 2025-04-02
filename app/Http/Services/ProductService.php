@@ -13,27 +13,27 @@ class ProductService
     public function update(Product $product, UpdateProductRequest $request)
     {
         $data = $request->validated();
-        $image = $data['image'];
+        $image = $data['image'] ?? null;
 
-        $oldImageName = basename($product->image);
-        $newImageName = $image->getClientOriginalName();
-        if (!ImageService::imageExistsInDB($product, $oldImageName))
-            ImageService::deleteImage(Product::$imageDir . $oldImageName);
+        if($image){
+            $oldImageName = basename($product->image);
+            $newImageName = $image->getClientOriginalName();
+            if (!ImageService::imageExistsInDB($product, $product->image))
+                ImageService::deleteImage($product->image);
 
-        $newImage = ImageService::moveImage($image, Product::$imageDir, $newImageName);
-        if (!$newImage) {
-            abort(500, 'File not uploaded');
+            $newImage = ImageService::moveImage($image, 'images/products/', $newImageName);
+            if (!$newImage) {
+                abort(500, 'File not uploaded');
+            }
+            $data['image'] = "images/products/".$newImageName;
         }
-        $data['image'] = $newImageName;
 
 
         $featuresIds = [];
         foreach ($data['features'] as $feature) {
-            if(empty($feature['title']) || empty($feature['description']))
-                continue;
             $title = $feature['title'];
             $description = $feature['description'];
-            $featuresIds[] = Feature::firstOrCreate([
+            $featuresIds[] = Feature::query()->firstOrCreate([
                 'title' => $title,
                 'description' => $description
             ])->id;
@@ -46,16 +46,14 @@ class ProductService
     {
         $data = $request->validated();
 
-
-
         /** @var UploadedFile $image */
         $image = $data['image'];
         $imageName = $image->getClientOriginalName();
-        $imageUploaded = ImageService::moveImage($image, 'images/products', $imageName);
+        $imageUploaded = ImageService::moveImage($image, 'images/products/', $imageName);
         if(!$imageUploaded){
             abort(300, 'File not uploaded');
         }
-        $data['image'] = $imageName;
+        $data['image'] = "images/products/".$imageName;
 
         $product = Product::firstOrCreate([
             'title' => $data['title'],
@@ -65,11 +63,9 @@ class ProductService
 
         $featuresIds = [];
         foreach ($data['features'] as $feature) {
-            if(empty($feature['title']) || empty($feature['description']))
-                continue;
             $title = $feature['title'];
             $description = $feature['description'];
-            $featuresIds[] = Feature::create([
+            $featuresIds[] = Feature::query()->firstOrCreate([
                 'title' => $title,
                 'description' => $description
             ])->id;
@@ -81,8 +77,9 @@ class ProductService
 
     public function destroy(Product $product)
     {
-        if (!ImageService::imageExistsInDB($product, basename($product->image)))
-            ImageService::deleteImage(Product::$imageDir . basename($product->image));
+        if (!ImageService::imageExistsInDB($product, $product->image))
+            ImageService::deleteImage($product->image);
+        $product->features()->detach();
         $product->delete();
     }
 }

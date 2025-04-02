@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-md-6">
                             <div class="card shadow-lg border-0 product-image-url">
-                            <img src="{{$product->image == null ? 'https://picsum.photos/600/400' : asset( $product->image) }}" class="card-img-top rounded" alt="Product Image">
+                            <img src="{{$product->image == null ? 'https://picsum.photos/600/400' : asset("storage/".$product->image) }}" class="card-img-top rounded" alt="Product Image">
                         </div>
                     </div>
                     <div class="col-md-6">
