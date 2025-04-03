@@ -15,7 +15,7 @@ class Order extends Model
         'discount_id',
     ];
 
-    public function items()
+    public function products()
     {
         return $this->belongsToMany(Product::class, 'order_products');
     }
@@ -25,5 +25,19 @@ class Order extends Model
         $products = $this->belongsToMany(Product::class, 'order_products');
 
         return $products->pluck('price')->sum();
+    }
+
+    public function paypalOrder()
+    {
+        return $this->hasOne(PayPalOrder::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class);
     }
 }

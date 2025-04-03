@@ -15,8 +15,6 @@ class OrderService
         if (! $data['discount_id']) {
             unset($data['discount_id']);
         }
-        $order = Order::query()->create($data);
-
-        return $order->id;
+        return Order::query()->create($data);
     }
 }

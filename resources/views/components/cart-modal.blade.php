@@ -21,7 +21,7 @@
                                                 <i class="fas fa-angle-down mt-1"></i></a></p>
                                     </div>
                                 </div>
-                                <form action="{{route('orders.checkout')}}" method="POST" class="payment-form">
+                                <form action="{{route('orders.store')}}" method="POST" class="payment-form">
                                     @csrf
                                     <div class="products-block">
                                     </div>

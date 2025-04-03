@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\MainController::class, 'index'])->name('main');
+Route::get('/home', function (){
+    return redirect()->route('main');
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -40,7 +43,8 @@ Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
 });
 
 Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
-    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::post('/', [OrderController::class, 'store'])->name('store');
+    Route::middleware('order.checkout')->get('/{order}', [OrderController::class, 'checkout'])->name('checkout');
 });
 Route::group(['prefix' => 'discounts', 'as' => 'discounts.'], function () {
     Route::post('/check', [\App\Http\Controllers\DiscountController::class, 'check'])->name('check');
