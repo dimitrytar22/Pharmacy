@@ -19,11 +19,11 @@ class ProductFactory extends Factory
     {
         return [
             'title' => $this->faker->word(10),
-            'price' => rand(10,3000),
+            'price' => rand(10, 3000),
             'instruction' => $this->faker->text(500),
-            'count' => rand(0,1000),
+            'count' => rand(0, 1000),
             'category_id' => Category::all()->random(1)->first()->id,
-            'image' => 'images/products/default.jpg'
+            'image' => 'images/products/default.jpg',
         ];
     }
 }

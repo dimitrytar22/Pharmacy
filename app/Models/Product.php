@@ -19,11 +19,8 @@ class Product extends Model
         'image',
     ];
 
-
     public function features()
     {
         return $this->belongsToMany(Feature::class, 'product_features');
     }
-
-
 }

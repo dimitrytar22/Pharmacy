@@ -26,7 +26,8 @@ class StoreCategoryRequest extends FormRequest
             'image' => 'required|mimes:jpeg,png,jpg,svg|max:5000',
         ];
     }
-    public function  messages()
+
+    public function messages()
     {
         return [
             'title.required' => 'Title is required',
@@ -34,7 +35,7 @@ class StoreCategoryRequest extends FormRequest
             'title.max' => 'Title should be more less than 256 symbols',
             'image.required' => 'Image is required',
             'image.mimes' => 'You can upload only .jpeg .png .jpg .svg files!',
-            'image.max' => "Max image size 5mb!",
+            'image.max' => 'Max image size 5mb!',
         ];
     }
 }

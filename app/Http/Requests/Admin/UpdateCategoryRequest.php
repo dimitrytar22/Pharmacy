@@ -23,7 +23,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:256',
-            'image' => 'image'
+            'image' => 'image',
         ];
     }
 }

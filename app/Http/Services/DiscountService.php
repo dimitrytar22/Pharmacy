@@ -12,20 +12,21 @@ class DiscountService
     {
         $discountTitle = $request->json()->get('discount');
         $discount = Discount::query()->where('title', $discountTitle)->get()->first();
+
         return response()->json([
-                'status' => (bool)$discount,
-                'data' => $discount ? [
-                    'discount' => [
-                        'id' => $discount->id,
-                        'title' => $discount->title,
-                        'size' => $discount->size,
-                    ]
-                ] : null,
-                'error' => $discount ? null : [
-                    'code' => 404,
-                    'message' => 'Discount not found',
-                ]
-            ]
+            'status' => (bool) $discount,
+            'data' => $discount ? [
+                'discount' => [
+                    'id' => $discount->id,
+                    'title' => $discount->title,
+                    'size' => $discount->size,
+                ],
+            ] : null,
+            'error' => $discount ? null : [
+                'code' => 404,
+                'message' => 'Discount not found',
+            ],
+        ]
         );
     }
 }

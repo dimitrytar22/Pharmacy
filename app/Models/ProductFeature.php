@@ -12,8 +12,7 @@ class ProductFeature extends Model
     use SoftDeletes;
 
     protected $fillable = [
-      'product_id',
-      'feature_id',
+        'product_id',
+        'feature_id',
     ];
-
 }

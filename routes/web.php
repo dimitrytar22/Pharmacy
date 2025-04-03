@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
+
 Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
     Route::get('/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('show');
 
@@ -41,7 +42,7 @@ Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
 Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
     Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 });
-Route::group(['prefix' => 'discounts', 'as' => 'discounts.'], function (){
+Route::group(['prefix' => 'discounts', 'as' => 'discounts.'], function () {
     Route::post('/check', [\App\Http\Controllers\DiscountController::class, 'check'])->name('check');
 });
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'create'])->name('contact.create');
@@ -57,7 +58,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
         Route::post('/', [\App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('store');
         Route::delete('/{category}', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('destroy');
 
-
     });
     Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
         Route::get('/', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('index');
@@ -67,9 +67,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
         Route::put('/{product}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('update');
         Route::delete('/{product}', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('destroy');
 
-
     });
 });
-Route::get('/forbidden', function (){
+Route::get('/forbidden', function () {
     return view('forbidden');
 })->name('forbidden');

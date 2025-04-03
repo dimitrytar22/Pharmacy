@@ -14,6 +14,7 @@ class Order extends Model
         'payment_method',
         'discount_id',
     ];
+
     public function items()
     {
         return $this->belongsToMany(Product::class, 'order_products');
@@ -22,6 +23,7 @@ class Order extends Model
     public function totalSum()
     {
         $products = $this->belongsToMany(Product::class, 'order_products');
+
         return $products->pluck('price')->sum();
     }
 }

@@ -31,6 +31,11 @@
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
+                @if (Route::has('register'))
+                    <a class="text-decoration-none text-muted" href="{{ route('register') }}">
+                        {{ __('Not registered?') }}
+                    </a>
+                @endif
 
             <x-primary-button class="btn btn-primary">
                 {{ __('Log in') }}

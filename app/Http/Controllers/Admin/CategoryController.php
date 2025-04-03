@@ -7,21 +7,15 @@ use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Http\Services\CategoryService;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
-    public function __construct(private CategoryService $service)
-    {
-    }
+    public function __construct(private CategoryService $service) {}
 
     public function index()
     {
         return view('admin.categories.index', [
-            'categories' => Category::all()
+            'categories' => Category::all(),
         ]);
     }
 
@@ -32,22 +26,27 @@ class CategoryController extends Controller
 
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $this->service->update($request,$category);
+        $this->service->update($request, $category);
+
         return redirect()->route('admin.categories.index')->with('success', 'Image changed successfully!');
     }
+
     public function create()
     {
         return view('admin.categories.create');
     }
+
     public function store(StoreCategoryRequest $request)
     {
         $this->service->store($request);
+
         return redirect()->route('admin.categories.index')->with('success', 'Category created successfully!');
     }
 
     public function destroy(Category $category)
     {
         $this->service->destroy($category);
+
         return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully!');
     }
 }

@@ -6,8 +6,6 @@ use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 
 class CategoryService
 {
@@ -17,19 +15,19 @@ class CategoryService
         $title = $data['title'];
         $image = $data['image'] ?? null;
 
-        if($image){
+        if ($image) {
             $oldImageName = basename($category->image);
             $newImageName = $image->getClientOriginalName();
-            if (!ImageService::imageExistsInDB($category, $category->image))
+            if (! ImageService::imageExistsInDB($category, $category->image)) {
                 ImageService::deleteImage($category->image);
+            }
 
-            $newImage = ImageService::moveImage($image, 'images/categories/' , $newImageName);
-            if (!$newImage) {
+            $newImage = ImageService::moveImage($image, 'images/categories/', $newImageName);
+            if (! $newImage) {
                 abort(500, 'File not uploaded');
             }
-            $category->image = "images/categories/". $newImageName;
+            $category->image = 'images/categories/'.$newImageName;
         }
-
 
         $category->title = $title;
         $category->save();
@@ -41,18 +39,20 @@ class CategoryService
         $image = $data['image'];
         $imageName = $image->getClientOriginalName();
         $imageUploaded = ImageService::moveImage($image, 'images/categories', $imageName);
-        if (!$imageUploaded) {
+        if (! $imageUploaded) {
             abort(500, 'File not uploaded');
         }
-        $data['image'] = "images/categories/".$imageName;
+        $data['image'] = 'images/categories/'.$imageName;
+
         return Category::query()->create($data);
     }
 
     public function destroy(Category $category)
     {
 
-        if (!ImageService::imageExistsInDB($category, $category->image))
+        if (! ImageService::imageExistsInDB($category, $category->image)) {
             ImageService::deleteImage($category->image);
+        }
         $category->delete();
     }
 }

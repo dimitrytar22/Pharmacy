@@ -19,6 +19,6 @@ class FeatureFactory extends Factory
         return [
             'title' => $this->faker->word(5),
             'description' => $this->faker->text(20),
-            ];
+        ];
     }
 }
