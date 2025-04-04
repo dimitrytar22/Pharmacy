@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Order;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderRequest extends FormRequest
+class PayRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,15 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'products' => 'required|array',
-            'products.*.id' => 'required|integer|exists:products,id',
-            'products.*.amount' => 'required|integer',
-            'discount_id' => 'integer|exists:discounts,id',
-//            'payment_method_id' => 'required|max:255',
+            'sum' => 'required|numeric|gt:0'
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'sum.required' => 'Sum is required',
+            'sum.integer' => 'Sum must be an integer',
+            'sum.gt' => 'Sum cannot be negative'
         ];
     }
 }

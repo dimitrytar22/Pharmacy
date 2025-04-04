@@ -15,16 +15,18 @@ class Order extends Model
         'discount_id',
     ];
 
-    public function products()
+    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'order_products');
     }
 
-    public function totalSum()
+    public function totalSum($discountSize = null)
     {
         $products = $this->belongsToMany(Product::class, 'order_products');
-
-        return $products->pluck('price')->sum();
+        $sum = $products->pluck('price')->sum();
+        if ($discountSize)
+            $sum = $sum * ((100 - $discountSize) / 100);
+        return $sum;
     }
 
     public function paypalOrder()
@@ -36,6 +38,7 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function discount()
     {
         return $this->belongsTo(Discount::class);

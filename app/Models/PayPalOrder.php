@@ -9,6 +9,12 @@ class PayPalOrder extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'paypal_order_id',
+        'payment_link'
+    ];
+
     protected $table = "paypal_orders";
 
     public function order()
