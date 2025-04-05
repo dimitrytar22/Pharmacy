@@ -21,11 +21,15 @@ class OrderService
     {
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
-        $productIds = array_column($data['products'], 'id');
+        $productIds = [];
+        foreach ($data['products'] as $product) {
+           $productIds[$product['id']] = ['amount' => $product['amount']];
+        }
         unset($data['products']);
         $order = Order::query()->create($data);
         $order->products()->attach($productIds);
         return $order;
+        // НЕ ЗАПИСЫВАЕТСЯ КОЛИЧЕСТВО ПРОДУКТОВ В ЗАКАЗЕ!!!!
     }
 
 

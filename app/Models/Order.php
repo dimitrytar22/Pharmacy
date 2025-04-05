@@ -17,13 +17,16 @@ class Order extends Model
 
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'order_products');
+        return $this->belongsToMany(Product::class, 'order_products')->withPivot('amount');
     }
 
-    public function totalSum($discountSize = null)
+    public function totalSum(int $discountSize = null)
     {
-        $products = $this->belongsToMany(Product::class, 'order_products');
-        $sum = $products->pluck('price')->sum();
+        $products = $this->products();
+        $sum = 0;
+        $products->get(['price', 'amount'])->each(function ($item) use (&$sum){
+            $sum += $item->price * $item->amount;
+        });
         if ($discountSize)
             $sum = $sum * ((100 - $discountSize) / 100);
         return $sum;

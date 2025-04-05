@@ -30,6 +30,7 @@
                                 <th>Title</th>
                                 <th>Image</th>
                                 <th>Description</th>
+                                <th>Amount</th>
                                 <th>Price</th>
                             </tr>
                             </thead>
@@ -41,7 +42,8 @@
                                     <td><img style="width: 100px" src="{{asset('storage/'.$product->image)}}"
                                              alt="{{basename($product->image)}}"></td>
                                     <td>{{ Str::limit($product->instruction, 50) }}</td>
-                                    <td>{{ number_format($product->price, 2) }} ₽</td>
+                                    <td> {{($product->pivot->amount) }}</td>
+                                    <td>{{ number_format($product->price, 2) }} $</td>
                                 </tr>
                             @endforeach
                             </tbody>
