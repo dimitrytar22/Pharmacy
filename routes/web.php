@@ -44,7 +44,7 @@ Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
 
 Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
     Route::post('/', [OrderController::class, 'store'])->name('store');
-    Route::group(['middleware' => 'order.checkout'], function () {
+    Route::group(['middleware' => 'checkout'], function () {
         Route::get('/{order}', [OrderController::class, 'checkout'])->name('checkout');
         Route::post('/{order}/pay', [OrderController::class, 'pay'])->name('checkout.pay');
         Route::get('/{order}/fail', [OrderController::class, 'fail'])->name('checkout.fail');

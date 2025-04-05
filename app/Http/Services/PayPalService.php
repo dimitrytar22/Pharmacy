@@ -59,7 +59,15 @@ class PayPalService
      */
     public function getOrderDetails(string $payment_id): \Psr\Http\Message\StreamInterface|array|string
     {
-        return $this->payPal->showOrderDetails($payment_id);
+        $response = $this->payPal->showOrderDetails($payment_id);
+        if (isset($response['error'])) {
+            return [
+                'status' => false,
+                'message' => $response['error']['name']
+            ];
+        }
+        $response['status'] = true;
+        return $response;
     }
 
     /**
