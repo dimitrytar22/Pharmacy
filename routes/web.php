@@ -55,9 +55,17 @@ Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
 Route::group(['prefix' => 'discounts', 'as' => 'discounts.'], function () {
     Route::post('/check', [\App\Http\Controllers\DiscountController::class, 'check'])->name('check');
 });
+Route::group(['prefix' => 'contact', 'as' => 'contact.'], function () {
+    Route::get('/', [\App\Http\Controllers\ContactController::class, 'create'])->name('create');
+    Route::post('/', [\App\Http\Controllers\ContactController::class, 'submit'])->name('submit');
+});
+Route::group(['prefix' => 'profile', 'middleware' => 'auth', 'as' => 'profile.'], function () {
+    Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
+        Route::get('/', [\App\Http\Controllers\Profile\OrderController::class, 'index'])->name('index');
+        Route::middleware('profile.orders.show')->get('/{order}',[\App\Http\Controllers\Profile\OrderController::class, 'show'])->name('show');
 
-Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'create'])->name('contact.create');
-Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
+    });
+});
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function () {

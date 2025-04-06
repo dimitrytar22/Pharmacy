@@ -16,7 +16,7 @@
 <header class="bg-white shadow py-3">
     <div class="container d-flex justify-content-between align-items-center">
         <a href="{{ route('main') }}" class="d-flex align-items-center text-decoration-none text-dark">
-            <img src="{{ asset('images/logo.png') }}" alt="Pharmacy Logo" class="me-2" style="height: 40px;">
+            <img src="{{ asset('storage/images/logo.png') }}" alt="Pharmacy Logo" class="me-2" style="height: 40px;">
             <h1 class="h4 fw-bold mb-0">Pharmacy</h1>
         </a>
 
@@ -53,7 +53,8 @@
                         @can('view', \Illuminate\Support\Facades\Auth::user())
                             <li><a class="dropdown-item" href="{{ route('admin.index') }}">Admin Panel</a></li>
                         @endcan
-                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.orders.index') }}">Orders</a></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

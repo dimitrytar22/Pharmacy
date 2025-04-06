@@ -29,7 +29,6 @@ class OrderService
         $order = Order::query()->create($data);
         $order->products()->attach($productIds);
         return $order;
-        // НЕ ЗАПИСЫВАЕТСЯ КОЛИЧЕСТВО ПРОДУКТОВ В ЗАКАЗЕ!!!!
     }
 
 
@@ -84,7 +83,11 @@ class OrderService
         }
 
         $paypalOrder = PayPalOrder::query()->where('paypal_order_id', $paypalOrderId)->first();
-        $paypalOrder->captured_at = Carbon::parse($response['purchase_units'][0]['payments']['captures'][0]['create_time'])->format('Y-m-d H:i:s');
+        $finishingDate = Carbon::parse($response['purchase_units'][0]['payments']['captures'][0]['create_time'])->format('Y-m-d H:i:s');
+        $paypalOrder->captured_at = $finishingDate;
+        $order = $paypalOrder->order;
+        $order->finished_at = $finishingDate;
+        $order->save();
         $paypalOrder->save();
         return true;
     }

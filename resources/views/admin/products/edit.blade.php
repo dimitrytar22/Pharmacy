@@ -35,10 +35,10 @@
                     <button type="button" id="add-feature-btn" class="btn btn-primary btn-sm ms-2">+</button>
                     <div id="features-container">
                         @foreach($product->features as $feature)
-                            <div class="input-group mb-2 feature-item">
-                                <input type="text" name="features[0][title]" class="form-control" placeholder="Title"
+                            <div class="input-group mb-2 feature-item" data-id="{{$feature->id}}">
+                                <input type="text" name="features[{{$feature->id}}][title]" class="form-control feature-item-title" placeholder="Title"
                                        value="{{$feature->title}}">
-                                <input type="text" name="features[0][description]" class="form-control"
+                                <input type="text" name="features[{{$feature->id}}][description]" class="form-control feature-item-description"
                                        placeholder="Description" value="{{$feature->description}}">
                                 <button type="button" class="btn btn-danger remove-feature-btn">-</button>
                             </div>

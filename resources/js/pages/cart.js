@@ -152,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function applyDiscount() {
         if (!discountSet()) {
-            console.log('122312132');
             return;
         }
         let discount = JSON.parse(localStorage.getItem('discount'));

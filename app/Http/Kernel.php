@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\AdminPanelMiddleware;
 use App\Http\Middleware\CheckoutMiddleware;
+use App\Http\Middleware\UserOrdersMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => AdminPanelMiddleware::class,
         'checkout' => CheckoutMiddleware::class,
+        'profile.orders.show' => UserOrdersMiddleware::class
     ];
 }

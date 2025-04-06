@@ -1,8 +1,13 @@
 import "https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js";
+import {all} from "axios";
 
 ClassicEditor.create(document.querySelector('#editor')).catch(error => console.error(error));
-
+let allExistingFeatures = document.querySelectorAll('.feature-item');
 let featureCount = 1;
+allExistingFeatures.forEach((item)=> {
+    featureCount = ++item.dataset.id;
+});
+
 document.getElementById('add-feature-btn').addEventListener('click', () => {
     const container = document.getElementById('features-container');
     const newFeature = document.createElement('div');

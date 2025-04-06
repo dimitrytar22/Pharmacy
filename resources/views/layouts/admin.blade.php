@@ -16,7 +16,7 @@
     <aside class="bg-primary text-white vh-100 p-3" style="width: 250px;">
         <div class="mb-4 text-center">
             <a href="{{ route('admin.index') }}" class="text-white text-decoration-none d-flex align-items-center">
-                <img src="{{ asset('images/logo.png') }}" alt="Admin Logo" class="me-2" style="height: 40px;">
+                <img src="{{ asset('storage/images/logo.png') }}" alt="Admin Logo" class="me-2" style="height: 40px;">
                 <h1 class="h5 mb-0">Admin Panel</h1>
             </a>
         </div>
