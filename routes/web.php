@@ -62,7 +62,7 @@ Route::group(['prefix' => 'contact', 'as' => 'contact.'], function () {
 Route::group(['prefix' => 'profile', 'middleware' => 'auth', 'as' => 'profile.'], function () {
     Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
         Route::get('/', [\App\Http\Controllers\Profile\OrderController::class, 'index'])->name('index');
-        Route::middleware('profile.orders.show')->get('/{order}',[\App\Http\Controllers\Profile\OrderController::class, 'show'])->name('show');
+        Route::middleware('profile.orders.show')->get('/{order}', [\App\Http\Controllers\Profile\OrderController::class, 'show'])->name('show');
 
     });
 });
@@ -70,24 +70,10 @@ Route::group(['prefix' => 'profile', 'middleware' => 'auth', 'as' => 'profile.']
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function () {
     Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
-    Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('index');
-        Route::get('/{category}/edit', [\App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('edit');
-        Route::put('/{category}', [\App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('update');
-        Route::get('/create', [\App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('create');
-        Route::post('/', [\App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('store');
-        Route::delete('/{category}', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('destroy');
-
-    });
-    Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
-        Route::get('/', [\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('index');
-        Route::get('/create', [\App\Http\Controllers\Admin\ProductController::class, 'create'])->name('create');
-        Route::get('/{product}/edit', [\App\Http\Controllers\Admin\ProductController::class, 'edit'])->name('edit');
-        Route::post('/', [\App\Http\Controllers\Admin\ProductController::class, 'store'])->name('store');
-        Route::put('/{product}', [\App\Http\Controllers\Admin\ProductController::class, 'update'])->name('update');
-        Route::delete('/{product}', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('destroy');
-
-    });
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+    Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
+    Route::post('orders/search', [\App\Http\Controllers\Admin\OrderController::class, 'search'])->name('orders.search');
 });
 
 Route::get('/forbidden', function () {

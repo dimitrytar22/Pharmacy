@@ -46,4 +46,9 @@ class Order extends Model
     {
         return $this->belongsTo(Discount::class);
     }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
 }

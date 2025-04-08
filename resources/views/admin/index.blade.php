@@ -48,7 +48,7 @@
                         <img src="{{ asset('storage/images/orders.png') }}" alt="Orders Icon" class="me-3" width="40">
                         <div>
                             <h5 class="card-title">Total Orders</h5>
-                            <p class="h3">1</p>
+                            <p class="h3">{{$totalOrders}}</p>
                         </div>
                     </div>
                 </div>

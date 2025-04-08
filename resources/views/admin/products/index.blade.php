@@ -1,8 +1,11 @@
 @extends('layouts.admin')
 
-@section('title', 'Products')
-
-@section('subtitle', 'Manage Products')
+@section('title')
+    Products
+@endsection
+@section('subtitle')
+    Manage Products
+@endsection
 
     @section('content')
         <div class="container mt-4">

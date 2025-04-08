@@ -7,52 +7,49 @@
 
     <title>@yield('title') - Admin Panel</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
 <body class="bg-light text-dark">
-<div class="d-flex">
-    <aside class="bg-primary text-white vh-100 p-3" style="width: 250px;">
-        <div class="mb-4 text-center">
-            <a href="{{ route('admin.index') }}" class="text-white text-decoration-none d-flex align-items-center">
-                <img src="{{ asset('storage/images/logo.png') }}" alt="Admin Logo" class="me-2" style="height: 40px;">
-                <h1 class="h5 mb-0">Admin Panel</h1>
-            </a>
-        </div>
-        <nav>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a href="{{ route('admin.index') }}" class="nav-link text-white">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.products.index') }}" class="nav-link text-white">Manage Products</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.categories.index') }}" class="nav-link text-white">Manage Categories</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white">Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white">Users</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white">Settings</a>
-                </li>
-                <li class="nav-item mt-3">
-                    <a href="{{ route('main') }}" class="btn btn-danger w-100">Exit Admin Panel</a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
+<div class="container-fluid">
+    <div class="row min-vh-100">
+        <aside class="col-12 col-md-3 col-xl-2 bg-primary text-white d-flex flex-column p-3">
+            <div class="mb-4 text-center">
+                <a href="{{ route('admin.index') }}" class="text-white text-decoration-none d-flex align-items-center justify-content-center">
+                    <img src="{{ asset('storage/images/logo.png') }}" alt="Admin Logo" class="me-2" style="height: 40px;">
+                    <h1 class="h5 mb-0">Admin Panel</h1>
+                </a>
+            </div>
+            <nav class="flex-grow-1">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.index') }}" class="nav-link text-white">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.products.index') }}" class="nav-link text-white">Manage Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.categories.index') }}" class="nav-link text-white">Manage Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('admin.orders.index')}}" class="nav-link text-white">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-white">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-white">Settings</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="mt-auto">
+                <a href="{{ route('main') }}" class="btn btn-danger w-100">Exit Admin Panel</a>
+            </div>
+        </aside>
 
-    <!-- Main Content -->
-    <div class="flex-grow-1">
-        <header class="bg-white shadow p-3 mb-4">
-            <div class="container d-flex justify-content-between align-items-center">
-                <h2 class="h4">Admin Panel @hasSection('subtitle') - @yield('subtitle') @endif</h2>
-                <div>
+        <div class="col bg-white d-flex flex-column p-0">
+            <header class="shadow p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0">Admin Panel @hasSection('subtitle') - @yield('subtitle') @endif</h2>
                     @auth
                         <div class="d-flex align-items-center">
                             <span class="me-3">{{ Auth::user()->name }}</span>
@@ -63,15 +60,14 @@
                         </div>
                     @endauth
                 </div>
-            </div>
-        </header>
+            </header>
 
-        <main class="container py-3">
-            @yield('content')
-        </main>
+            <main class="p-4 flex-grow-1">
+                @yield('content')
+            </main>
+        </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
