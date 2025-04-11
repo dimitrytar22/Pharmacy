@@ -11,6 +11,14 @@
                 <h5 class="mb-0">Edit Order: {{ $order->id }}</h5>
             </div>
             <div class="card-body">
+                @if (session()->has('error'))
+                    <div class="mb-3">
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    </div>
+                @endif
+
                 <div class="mb-3">
                     <label class="form-label fw-bold">User Name:</label>
                     <p class="form-text">{{ $order->user->name }}</p>
@@ -57,24 +65,31 @@
                             </div>
 
 
-
                             <div class="order-products">
                                 <div class="section-header">
                                     <h5 class="mb-3">Order Products</h5>
                                 </div>
                                 @foreach($order->products as $product)
-                                    <div class="list-group-item border mb-2 product d-flex justify-content-between align-items-center" data-id="{{ $product->id }}">
+                                    <div
+                                        class="list-group-item border mb-2 product d-flex justify-content-between align-items-center"
+                                        data-id="{{ $product->id }}">
                                         <div class="flex-grow-1 me-3">
                                             <strong>{{ $product->title }}</strong>
                                         </div>
                                         <div class="d-flex align-items-center gap-2">
-                                            <input type="number" class="form-control form-control-sm product-amount" name="products[{{ $product->id }}][amount]" value="{{ $product->pivot->amount }}" min="1" max="{{ $product->count }}" style="width: 80px;">
-                                            <span class="badge bg-secondary product-amount-label">Amount: {{ $product->pivot->amount }}</span>
-                                            <span class="text-danger remove-product-button" data-id="{{ $product->id }}" style="cursor: pointer;">
+                                            <input type="number" class="form-control form-control-sm product-amount"
+                                                   name="products[{{ $product->id }}][amount]"
+                                                   value="{{ $product->pivot->amount }}" min="1"
+                                                   max="{{ $product->count }}" style="width: 80px;">
+                                            <span
+                                                class="badge bg-secondary">Available: {{ $product->count }}</span>
+                                            <span class="text-danger remove-product-button" data-id="{{ $product->id }}"
+                                                  style="cursor: pointer;">
                                                 <i class="fas fa-times"></i>
                                             </span>
                                         </div>
-                                        <input type="hidden" name="products[{{ $product->id }}][id]" value="{{ $product->id }}">
+                                        <input type="hidden" name="products[{{ $product->id }}][id]"
+                                               value="{{ $product->id }}">
                                     </div>
                                 @endforeach
 
@@ -112,9 +127,9 @@
                             <input type="datetime-local" id="finished_at" name="finished_at"
                                    value="{{ $order->finished_at ? \Carbon\Carbon::parse($order->finished_at)->format('Y-m-d\TH:i') : '' }}"
                                    class="form-control" placeholder="Select date and time">
-                        @error('finished_at')
+                            @error('finished_at')
                             <x-input-error :messages="$message"/>
-                        @enderror
+                            @enderror
                         </div>
                     </div>
 

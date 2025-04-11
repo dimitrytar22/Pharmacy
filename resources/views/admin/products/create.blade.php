@@ -47,11 +47,7 @@
                                    placeholder="Description">
                             <button type="button" class="btn btn-sm btn-danger remove-feature-btn">-</button>
                         </div>
-                        @error('features.*')
 
-                        <x-input-error :messages="$message"/>
-
-                        @enderror
                         @error('features')
 
                         <x-input-error :messages="$message"/>

@@ -67,8 +67,8 @@ class OrderController extends Controller
      */
     public function update(UpdateRequest $request, Order $order)
     {
-        $this->service->update($request, $order);
-        return redirect()->route('admin.orders.index')->with('success', "Order $order->id updated successfully!");
+        $response = $this->service->update($request, $order);
+        return $response['status'] ? redirect()->route('admin.orders.index')->with('success', "Order $order->id updated successfully!") : redirect()->back()->with('error', $response['error']['message']);
     }
 
 

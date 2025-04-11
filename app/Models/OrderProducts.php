@@ -14,4 +14,9 @@ class OrderProducts extends Model
         'product_id',
         'amount'
     ];
+    protected $table = 'order_products';
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

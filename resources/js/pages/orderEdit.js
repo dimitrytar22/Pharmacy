@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     existingProducts.forEach((item) => {
         const existingAmounts = item.querySelector('.product-amount');
         const existingRemoveButton = item.querySelector('.remove-product-button');
-        addAmountInputListener(existingAmounts);
         addRemoveListener(existingRemoveButton);
     });
 
@@ -71,11 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function addAmountInputListener(item) {
-        item.addEventListener('change', function (event) {
-            event.target.parentElement.querySelector('.product-amount-label').innerText = "Amount: " + item.value;
-        });
-    }
 
     function addRemoveListener(item) {
         item.addEventListener('click', function () {
@@ -91,7 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
         productBlock.innerHTML = `<span><strong>${data.title}</strong></span>
                                         <div class="d-flex align-items-center gap-2">
                                             <input type="number" class="form-control form-control-sm product-amount" name="products[${data.id}][amount]" value="${data.amount}" min="1" max="${data.count}" style="width: 80px;">
-                                            <span class="badge bg-secondary product-amount-label">Amount: ${data.amount}</span>
+                                            <span
+                                                class="badge bg-secondary">Available: ${data.count}</span>
                                             <span class="text-danger remove-product-button" data-id="${data.id}" style="cursor: pointer;">
                                                 <i class="fas fa-times"></i>
                                             </span>
@@ -104,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(existingProduct);
         } else {
             orderProducts.appendChild(productBlock);
-            addAmountInputListener(productBlock.querySelector('.product-amount'));
             addRemoveListener(productBlock.querySelector('.remove-product-button'));
         }
 
@@ -112,9 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateProductAmount(product, amount) {
         const input = product.querySelector('.product-amount');
-        const amountLabel = product.querySelector('.product-amount-label');
         input.value = +product.querySelector('.product-amount').value + +amount;
-        amountLabel.innerText = "Amount: " + input.value;
         return input.value;
     }
 
