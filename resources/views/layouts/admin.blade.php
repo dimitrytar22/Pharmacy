@@ -12,7 +12,7 @@
 <body class="bg-light text-dark">
 <div class="container-fluid">
     <div class="row min-vh-100">
-        <aside class="col-12 col-md-3 col-xl-2 bg-primary text-white d-flex flex-column p-3">
+        <aside class="col-12 col-md-2 col-xl-2 bg-primary text-white d-flex flex-column p-3">
             <div class="mb-4 text-center">
                 <a href="{{ route('admin.index') }}" class="text-white text-decoration-none d-flex align-items-center justify-content-center">
                     <img src="{{ asset('storage/images/logo.png') }}" alt="Admin Logo" class="me-2" style="height: 40px;">

@@ -23,9 +23,11 @@ class UpdateRequest extends FormRequest
     {
         return [
             'payment_method_id' => 'integer|exists:payment_methods,id',
-            'product_ids' => 'required|array',
-            'product_ids.*' => 'integer|exists:products,id',
-            'discount_id' => 'integer|exists:discounts,id'
+            'discount_id' => 'integer|exists:discounts,id',
+            'products' => 'required|array',
+            'products.*.id' => 'required|integer|exists:products,id',
+            'products.*.amount' => 'required|integer',
+            'finished_at' => 'date_format:Y-m-d\TH:i',
         ];
     }
 
@@ -34,12 +36,16 @@ class UpdateRequest extends FormRequest
         return [
             'payment_method_id.integer' => 'Payment method should be an integer',
             'payment_method_id.exists' => 'Payment method doesn\'t exist',
-            'product_ids.required' => 'Products are required',
-            'product_ids.array' => 'Products should be an array',
-            'product_ids.*.integer' => 'Each product should be an integer',
-            'product_ids.*.exists' => 'Product doesn\'t exist',
+            'products.required' => 'Products are required',
+            'products.array' => 'Products should be an array',
+            'products.*.id.required' => 'Each product id required',
+            'products.*.id.integer' => 'Each product id should be an integer',
+            'products.*.id.exists' => 'Product doesn\'t exist',
+            'products.*.amount.required' => 'Product amount is required',
+            'products.*.amount.integer' => 'Product amount should be an integer',
             'discount_id.integer' => 'Discount should be an integer',
-            'discount_id.exists' => 'Discount doesn\'t exist'
+            'discount_id.exists' => 'Discount doesn\'t exist',
+            'finished_at.date_format' => 'Invalid date time format',
         ];
     }
 }

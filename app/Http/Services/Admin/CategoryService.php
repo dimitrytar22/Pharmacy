@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Services\Admin;
 
 use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
+use App\Http\Services\ImageService;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 

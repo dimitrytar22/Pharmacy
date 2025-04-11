@@ -4,13 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Order\UpdateRequest;
+use App\Http\Requests\Admin\Product\SearchRequest;
+use App\Http\Resources\Admin\ProductResource;
+use App\Http\Services\Admin\OrderService;
 use App\Models\Discount;
 use App\Models\Order;
 use App\Models\PaymentMethod;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function __construct(public OrderService $service)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -57,18 +65,13 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, string $id)
+    public function update(UpdateRequest $request, Order $order)
     {
-        dd($request->validated());
+        $this->service->update($request, $order);
+        return redirect()->route('admin.orders.index')->with('success', "Order $order->id updated successfully!");
     }
 
-    public function search(Request $request)
-    {
-        return response()->json([
-           'status' => strlen($request->get('prompt')) > 10,
-           'message' => $request->all()
-        ]);
-    }
+
     /**
      * Remove the specified resource from storage.
      */

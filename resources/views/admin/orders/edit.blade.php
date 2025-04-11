@@ -41,7 +41,7 @@
                         <label class="form-label">Products</label>
                         <div class="mb-3">
                             <div class="d-flex align-items-center">
-                                <input type="text" class="form-control w-25" name="prompt"
+                                <input type="text" class="form-control w-25"
                                        id="product-search-prompt-field" placeholder="Search for products">
                                 <span id="search-status" class="ms-2 text-muted"></span>
                             </div>
@@ -49,27 +49,43 @@
 
 
                         <div class="list-group">
-
-                            <div class="new-products">
+                            <div class="section-header">
+                                <h5 class="mb-3">Search Results</h5>
+                            </div>
+                            <div class="products-search-list">
 
                             </div>
 
-                            <div class="existing-products">
+
+
+                            <div class="order-products">
+                                <div class="section-header">
+                                    <h5 class="mb-3">Order Products</h5>
+                                </div>
                                 @foreach($order->products as $product)
-                                    <div
-                                        class="list-group-item d-flex justify-content-between align-items-center border mb-2">
-                                        <span>{{ $product->title }}</span>
-                                        <span class="badge bg-secondary">Amount: {{ $product->pivot->amount }}</span>
-                                        <input type="hidden" name="product_ids[]" value="{{ $product->id }}">
+                                    <div class="list-group-item border mb-2 product d-flex justify-content-between align-items-center" data-id="{{ $product->id }}">
+                                        <div class="flex-grow-1 me-3">
+                                            <strong>{{ $product->title }}</strong>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <input type="number" class="form-control form-control-sm product-amount" name="products[{{ $product->id }}][amount]" value="{{ $product->pivot->amount }}" min="1" max="{{ $product->count }}" style="width: 80px;">
+                                            <span class="badge bg-secondary product-amount-label">Amount: {{ $product->pivot->amount }}</span>
+                                            <span class="text-danger remove-product-button" data-id="{{ $product->id }}" style="cursor: pointer;">
+                                                <i class="fas fa-times"></i>
+                                            </span>
+                                        </div>
+                                        <input type="hidden" name="products[{{ $product->id }}][id]" value="{{ $product->id }}">
                                     </div>
                                 @endforeach
+
                             </div>
 
                         </div>
-                        @error('product_ids')
+
+                        @error('products')
                         <x-input-error :messages="$message"/>
                         @enderror
-                        @error('product_ids.*')
+                        @error('products.*')
                         <x-input-error :messages="$message"/>
                         @enderror
                     </div>
@@ -82,7 +98,7 @@
                             @foreach($discounts as $discount)
                                 <option
                                     value="{{ $discount->id }}"
-                                    {{ $order->discount->id === $discount->id ? 'selected' : '' }}>
+                                    {{ $order->discount->id ?? null === $discount->id ? 'selected' : '' }}>
                                     {{ $discount->title }}
                                 </option>
                             @endforeach
@@ -90,6 +106,16 @@
                         @error('discount_id')
                         <x-input-error :messages="$message"/>
                         @enderror
+
+                        <div class="mb-3 mt-3">
+                            <label for="finished_at" class="form-label">Finished At</label>
+                            <input type="datetime-local" id="finished_at" name="finished_at"
+                                   value="{{ $order->finished_at ? \Carbon\Carbon::parse($order->finished_at)->format('Y-m-d\TH:i') : '' }}"
+                                   class="form-control" placeholder="Select date and time">
+                        @error('finished_at')
+                            <x-input-error :messages="$message"/>
+                        @enderror
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
@@ -102,7 +128,7 @@
                     @csrf
                     @method('DELETE')
                 </form>
-                <form id="search-form" action="{{route('admin.orders.search')}}">
+                <form id="search-form" action="{{route('admin.products.search')}}">
                     @csrf
                 </form>
             </div>

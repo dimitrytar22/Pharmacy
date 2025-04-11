@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Services\Admin;
 
+use App\Http\Requests\Admin\Product\SearchRequest;
 use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Http\Resources\Admin\ProductResource;
+use App\Http\Services\ImageService;
 use App\Models\Feature;
 use App\Models\Product;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
 
 class ProductService
 {
@@ -85,5 +87,20 @@ class ProductService
         }
         $product->features()->detach();
         $product->delete();
+    }
+
+    public function search(SearchRequest $request)
+    {
+        $prompt = $request->validated()['prompt'];
+        $products = Product::query()->where('title', 'like', "%$prompt%")->get();
+
+        return response()->json([
+            'status' => $products->count() > 0,
+            'items' => $products->count() <= 0 ? null : ProductResource::collection($products),
+            'error' => $products->count() <= 0 ? [
+                'code' => 404,
+                'message' => 'Resource not found'
+            ] : null
+        ]);
     }
 }

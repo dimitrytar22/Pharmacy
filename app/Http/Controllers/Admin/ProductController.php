@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Product\SearchRequest;
 use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
-use App\Http\Services\ProductService;
+use App\Http\Resources\Admin\ProductResource;
+use App\Http\Services\Admin\ProductService;
 use App\Models\Category;
 use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function __construct(public ProductService $service) {}
+    public function __construct(public ProductService $service)
+    {
+    }
 
     public function index()
     {
@@ -31,7 +35,7 @@ class ProductController extends Controller
     {
         $product = $this->service->store($request);
 
-        return redirect()->route('admin.products.create')->with('success', 'Product '.$product->title.' created successfully!');
+        return redirect()->route('admin.products.create')->with('success', 'Product ' . $product->title . ' created successfully!');
     }
 
     public function edit(Product $product)
@@ -53,5 +57,10 @@ class ProductController extends Controller
         $this->service->destroy($product);
 
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully!');
+    }
+
+    public function search(SearchRequest $request)
+    {
+        return $this->service->search($request);
     }
 }

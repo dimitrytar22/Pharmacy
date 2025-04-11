@@ -11,8 +11,9 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'payment_method',
+        'payment_method_id',
         'discount_id',
+        'finished_at'
     ];
 
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

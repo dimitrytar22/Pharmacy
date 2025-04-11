@@ -72,8 +72,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+    Route::post('products/search', [\App\Http\Controllers\Admin\ProductController::class, 'search'])->name('products.search');
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
-    Route::post('orders/search', [\App\Http\Controllers\Admin\OrderController::class, 'search'])->name('orders.search');
 });
 
 Route::get('/forbidden', function () {
