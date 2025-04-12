@@ -19,7 +19,7 @@
             <div class="col-md-4">
                 <div class="card text-white bg-success">
                     <div class="card-body d-flex align-items-center">
-                        <img src="{{ asset('storage/images/products.png') }}" alt="Products Icon" class="me-3" width="40">
+                        <img src="{{ asset('images/defaults/products.png') }}" alt="Products Icon" class="me-3" width="40">
                         <div>
                             <h5 class="card-title">Total Products</h5>
                             <p class="h3">{{ $totalProducts }}</p>
@@ -32,7 +32,7 @@
             <div class="col-md-4">
                 <div class="card text-white bg-warning">
                     <div class="card-body d-flex align-items-center">
-                        <img src="{{ asset('storage/images/categories.png') }}" alt="Categories Icon" class="me-3" width="40">
+                        <img src="{{ asset('images/defaults/categories.png') }}" alt="Categories Icon" class="me-3" width="40">
                         <div>
                             <h5 class="card-title">Total Categories</h5>
                             <p class="h3">{{ $totalCategories }}</p>
@@ -45,7 +45,7 @@
             <div class="col-md-4">
                 <div class="card text-white bg-primary">
                     <div class="card-body d-flex align-items-center">
-                        <img src="{{ asset('storage/images/orders.png') }}" alt="Orders Icon" class="me-3" width="40">
+                        <img src="{{ asset('images/defaults/orders.png') }}" alt="Orders Icon" class="me-3" width="40">
                         <div>
                             <h5 class="card-title">Total Orders</h5>
                             <p class="h3">{{$totalOrders}}</p>

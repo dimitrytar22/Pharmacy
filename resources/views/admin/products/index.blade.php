@@ -25,7 +25,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                         <a href="{{ route('admin.products.edit', $product->id) }}" class="text-decoration-none">
                             <div class="card shadow-sm h-100">
-                                <img src="{{ !$product->image ? 'https://dummyimage.com/300x300/cccccc/000000&text=' . $product->title : asset("storage/".$product->image) }}" class="card-img-top" alt="Product Image">
+                                <img src="{{ !$product->image ? asset('images/defaults/products/default.jpg') : asset("storage/".$product->image) }}" class="card-img-top" alt="Product Image">
                                 <div class="card-body">
                                     <h5 class="card-title text-dark">{{ $product->title }}</h5>
                                 </div>

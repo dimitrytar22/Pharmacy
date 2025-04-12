@@ -71,7 +71,7 @@
                     <select name="category_id" id="category_id" class="form-select">
                         @foreach($categories as $category)
                             <option value="{{$category->id}}"
-                            {{$product->category->id === $category->id ? "selected" : ''}}>{{$category->title}}</option>
+                            {{$product->category->id ?? null === $category->id ? "selected" : ''}}>{{$category->title}}</option>
                         @endforeach
                     </select>
                 </div>

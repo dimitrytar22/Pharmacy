@@ -74,6 +74,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::post('products/search', [\App\Http\Controllers\Admin\ProductController::class, 'search'])->name('products.search');
     Route::resource('users.orders', \App\Http\Controllers\Admin\OrderController::class)->shallow();
+
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 });
 

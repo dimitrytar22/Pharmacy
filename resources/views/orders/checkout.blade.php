@@ -39,7 +39,7 @@
                                 <tr>
                                     <td><a href="{{route('products.show', $product->id)}}">{{ $product->title }}</a>
                                     </td>
-                                    <td><img style="width: 100px" src="{{asset('storage/'.$product->image)}}"
+                                    <td><img style="width: 100px" src="{{$product->image == null ? asset('images/defaults/products/default.jpg') : asset('storage/'.$product->image)}}"
                                              alt="{{basename($product->image)}}"></td>
                                     <td>{{ Str::limit($product->instruction, 50) }}</td>
                                     <td> {{($product->pivot->amount) }}</td>
