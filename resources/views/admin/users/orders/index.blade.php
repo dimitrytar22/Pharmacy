@@ -18,13 +18,13 @@
         @endif
 
         <div class="d-flex justify-content-end mb-4">
-            <a href="{{ route('admin.orders.create') }}" class="btn btn-outline-primary px-4">Add Order</a>
+            <a href="{{ route('admin.users.orders.create', $user) }}" class="btn btn-primary px-4">Add Order</a>
         </div>
 
         <div class="row g-4">
             @foreach($orders as $order)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="{{ route('admin.orders.edit', $order->id) }}" class="text-decoration-none">
+                    <a href="{{ route('admin.orders.show', $order->id) }}" class="text-decoration-none">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body">
                                 <h5 class="card-title text-dark mb-3">Order #{{ $order->id }}</h5>

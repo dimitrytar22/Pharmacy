@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -132,4 +133,27 @@ class ProductTest extends TestCase
             'feature_id' => $feature2->id
         ]);
     }
+
+    public function test_can_find_product_by_prompt()
+    {
+        $category = Category::factory()->create();
+        $product = Product::factory()->create([
+            'title' => 'Some product title',
+            'price' => 111,
+            'instruction' => 'Some instruction...',
+            'category_id' => $category->id,
+            'count' => 999,
+            'image' => 'image.png'
+        ]);
+        $prompt = Str::substr($product->title,0,3);
+
+        $response = $this->actingAs($this->admin)
+            ->post(route('admin.products.search', [
+                'prompt' => $prompt
+            ]));
+        $response->assertJsonPath('error', null);
+
+    }
+
+
 }

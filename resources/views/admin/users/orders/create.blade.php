@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    Edit {{ $order->id }}
+    Create
 @endsection
 
 @section('content')
     <div class="container mt-4">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Edit Order: {{ $order->id }}</h5>
+                <h5 class="mb-0">Create Order</h5>
             </div>
             <div class="card-body">
                 @if (session()->has('error'))
@@ -21,12 +21,11 @@
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">User Name:</label>
-                    <p class="form-text">{{ $order->user->name }}</p>
+                    <p class="form-text">{{$user->name }}</p>
                 </div>
 
-                <form id="edit-order-form" action="{{ route('admin.orders.update', $order->id) }}" method="POST">
+                <form id="edit-order-form" action="{{ route('admin.users.orders.store', $user->id) }}" method="POST">
                     @csrf
-                    @method('PUT')
 
                     <div class="mb-3">
                         <label for="payment_method_id" class="form-label">Payment Method</label>
@@ -34,8 +33,7 @@
                             <option value="">Select payment method</option>
                             @foreach($paymentMethods as $paymentMethod)
                                 <option
-                                    value="{{ $paymentMethod->id }}"
-                                    {{ $order->paymentMethod->id ?? null === $paymentMethod->id ? 'selected' : '' }}>
+                                    value="{{ $paymentMethod->id }}">
                                     {{ $paymentMethod->title }}
                                 </option>
                             @endforeach
@@ -69,30 +67,6 @@
                                 <div class="section-header">
                                     <h5 class="mb-3">Order Products</h5>
                                 </div>
-                                @foreach($order->products as $product)
-                                    <div
-                                        class="list-group-item border mb-2 product d-flex justify-content-between align-items-center"
-                                        data-id="{{ $product->id }}">
-                                        <div class="flex-grow-1 me-3">
-                                            <strong>{{ $product->title }}</strong>
-                                        </div>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <input type="number" class="form-control form-control-sm product-amount"
-                                                   name="products[{{ $product->id }}][amount]"
-                                                   value="{{ $product->pivot->amount }}" min="1"
-                                                   max="{{ $product->count }}" style="width: 80px;">
-                                            <span
-                                                class="badge bg-secondary">Available: {{ $product->count }}</span>
-                                            <span class="text-danger remove-product-button" data-id="{{ $product->id }}"
-                                                  style="cursor: pointer;">
-                                                <i class="fas fa-times"></i>
-                                            </span>
-                                        </div>
-                                        <input type="hidden" name="products[{{ $product->id }}][id]"
-                                               value="{{ $product->id }}">
-                                    </div>
-                                @endforeach
-
                             </div>
 
                         </div>
@@ -112,8 +86,7 @@
                             <option value="">Select discount</option>
                             @foreach($discounts as $discount)
                                 <option
-                                    value="{{ $discount->id }}"
-                                    {{ $order->discount->id ?? null === $discount->id ? 'selected' : '' }}>
+                                    value="{{ $discount->id }}">
                                     {{ $discount->title }}
                                 </option>
                             @endforeach
@@ -124,8 +97,7 @@
 
                         <div class="mb-3 mt-3">
                             <label for="finished_at" class="form-label">Finished At</label>
-                            <input type="datetime-local" id="finished_at" name="finished_at"
-                                   value="{{ $order->finished_at ? \Carbon\Carbon::parse($order->finished_at)->format('Y-m-d\TH:i') : '' }}"
+                            <input type="datetime-local" id="finished_at" name="finished_at" value=""
                                    class="form-control" placeholder="Select date and time">
                             @error('finished_at')
                             <x-input-error :messages="$message"/>
@@ -139,10 +111,7 @@
                     </div>
                 </form>
 
-                <form id="delete-form" action="{{ route('admin.orders.destroy', $order->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                </form>
+
                 <form id="search-form" action="{{route('admin.products.search')}}">
                     @csrf
                 </form>

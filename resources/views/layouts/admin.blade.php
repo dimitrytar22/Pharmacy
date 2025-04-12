@@ -31,10 +31,7 @@
                         <a href="{{ route('admin.categories.index') }}" class="nav-link text-white">Manage Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('admin.orders.index')}}" class="nav-link text-white">Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-white">Users</a>
+                        <a href="{{route('admin.users.index')}}" class="nav-link text-white">Users</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link text-white">Settings</a>
