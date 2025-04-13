@@ -4,15 +4,26 @@ namespace App\Http\Services\Admin;
 
 use App\Http\Requests\Admin\User\Order\StoreRequest;
 use App\Http\Requests\Admin\User\Order\UpdateRequest;
+use App\Models\Discount;
 use App\Models\Order;
 use App\Models\OrderProducts;
+use App\Models\PaymentMethod;
 use App\Models\Product;
+use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
 
 class OrderService
 {
 
+    public function getFilterData()
+    {
+        return [
+            'statuses' => Status::all(),
+            'paymentMethods' => PaymentMethod::all(),
+            'discounts' => Discount::all(),
+        ];
+    }
     public function update(UpdateRequest $request, Order $order)
     {
 
@@ -35,11 +46,10 @@ class OrderService
             ];
         }
         $order->products()->sync($productIdsWithAmount);
-        $order->payment_method_id = $data['payment_method_id'] ?? null;
-        $order->discount_id = $data['discount_id'] ?? null;
-        $order->finished_at = isset($data['finished_at']) ? Carbon::createFromFormat('Y-m-d\TH:i', $data['finished_at']) : null;
 
-        $order->save();
+        $data['paid_at'] = isset($data['paid_at']) ? Carbon::createFromFormat('Y-m-d\TH:i', $data['paid_at']) : null;
+        $order->update($data);
+
         return [
             'status' => true,
             'error' => null,
@@ -50,7 +60,6 @@ class OrderService
     {
         $data = $request->validated();
         $data['user_id'] = $user->id;
-        $order = Order::query()->create($data);
         $productIdsWithAmount = [];
         $amountGreaterThanCount = false;
         foreach ($data['products'] as $product) {
@@ -68,6 +77,7 @@ class OrderService
                 'order' => null,
             ];
         }
+        $order = Order::query()->create($data);
         $order->products()->attach($productIdsWithAmount);
         return [
             'status' => true,

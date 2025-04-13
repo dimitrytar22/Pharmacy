@@ -83,10 +83,10 @@ class OrderService
         }
 
         $paypalOrder = PayPalOrder::query()->where('paypal_order_id', $paypalOrderId)->first();
-        $finishingDate = Carbon::parse($response['purchase_units'][0]['payments']['captures'][0]['create_time'])->format('Y-m-d H:i:s');
-        $paypalOrder->captured_at = $finishingDate;
+        $payingDate = Carbon::parse($response['purchase_units'][0]['payments']['captures'][0]['create_time'])->format('Y-m-d H:i:s');
+        $paypalOrder->captured_at = $payingDate;
         $order = $paypalOrder->order;
-        $order->finished_at = $finishingDate;
+        $order->paid_at = $payingDate;
         $order->save();
         $paypalOrder->save();
         return true;

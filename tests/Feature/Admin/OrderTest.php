@@ -7,7 +7,10 @@ use App\Models\Order;
 use App\Models\OrderProducts;
 use App\Models\PaymentMethod;
 use App\Models\Product;
+use App\Models\Status;
 use App\Models\User;
+use Database\Seeders\DefaultDataSeeder;
+use Database\Seeders\OrderStatusSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Log;
@@ -28,8 +31,8 @@ class OrderTest extends TestCase
             'password' => 'password12321321321@',
             'role' => 'admin',
         ]);
+        $this->seed(DefaultDataSeeder::class);
     }
-
 
     public function test_cannot_store_order_with_products_which_amount_greater_than_available()
     {

@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('edit-order-form').addEventListener('submit', function (e) {
         const paymentSelect = document.getElementById('payment_method_id');
         const discountSelect = document.getElementById('discount_id');
-        const finishedAtInput = document.getElementById('finished_at');
+        const paidAtInput = document.getElementById('paid_at');
 
         if (!paymentSelect.value) {
             paymentSelect.removeAttribute('name');
@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
             discountSelect.removeAttribute('name');
         }
 
-        if(!finishedAtInput.value){
-            finishedAtInput.removeAttribute('name');
+        if(!paidAtInput.value){
+            paidAtInput.removeAttribute('name');
         }
     });
 

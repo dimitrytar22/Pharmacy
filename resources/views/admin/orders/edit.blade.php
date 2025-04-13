@@ -122,12 +122,27 @@
                         <x-input-error :messages="$message"/>
                         @enderror
 
+                        <label for="status_id" class="form-label">Status</label>
+                        <select name="status_id" id="status_id" class="form-select">
+                            <option value="">Select status</option>
+                            @foreach($statuses as $status)
+                                <option
+                                    value="{{ $status->id }}"
+                                    {{ $order->status->id ?? null === $status->id ? 'selected' : '' }}>
+                                    {{ $status->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('status_id')
+                        <x-input-error :messages="$message"/>
+                        @enderror
+
                         <div class="mb-3 mt-3">
-                            <label for="finished_at" class="form-label">Finished At</label>
-                            <input type="datetime-local" id="finished_at" name="finished_at"
-                                   value="{{ $order->finished_at ? \Carbon\Carbon::parse($order->finished_at)->format('Y-m-d\TH:i') : '' }}"
+                            <label for="paid_at" class="form-label">Paid At</label>
+                            <input type="datetime-local" id="paid_at" name="paid_at"
+                                   value="{{ $order->paid_at ? \Carbon\Carbon::parse($order->paid_at)->format('Y-m-d\TH:i') : '' }}"
                                    class="form-control" placeholder="Select date and time">
-                            @error('finished_at')
+                            @error('paid_at')
                             <x-input-error :messages="$message"/>
                             @enderror
                         </div>

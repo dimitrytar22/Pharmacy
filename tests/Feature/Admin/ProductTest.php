@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\User;
+use Database\Seeders\DefaultDataSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -30,6 +31,7 @@ class ProductTest extends TestCase
             'password' => 'password12321321321@',
             'role' => 'admin',
         ]);
+        $this->seed(DefaultDataSeeder::class);
     }
 
     public function test_can_store_product(): void
@@ -157,8 +159,9 @@ class ProductTest extends TestCase
 
     }
 
-    public function test_features_can_be_detached_when_product_is_force_deleted()
+    public function test_features_are_detached_when_product_is_force_deleted()
     {
+
         Storage::fake('public');
         Category::factory()->create();
         $featureIds = [
@@ -184,7 +187,7 @@ class ProductTest extends TestCase
     }
 
 
-    public function test_orders_can_be_detached_when_product_is_force_deleted()
+    public function test_orders_are_detached_when_product_is_force_deleted()
     {
         Storage::fake('public');
         Category::factory()->create();

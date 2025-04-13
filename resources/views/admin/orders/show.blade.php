@@ -28,9 +28,14 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Finished At:</label>
+                    <label class="form-label fw-bold">Status:</label>
+                    <p class="form-text mb-0">{{ $order->status->title }}</p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Paid At:</label>
                     <p class="form-text mb-0">
-                        {{ $order->finished_at ? \Carbon\Carbon::parse($order->finished_at)->format('Y-m-d H:i') : 'Not finished' }}
+                        {{ $order->paid_at ? \Carbon\Carbon::parse($order->paid_at)->format('Y-m-d H:i') : 'Not paid' }}
                     </p>
                 </div>
 

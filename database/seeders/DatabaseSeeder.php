@@ -16,9 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(5)->create();
-        Product::factory(10)->create();
-        Feature::factory(10)->create();
-        ProductFeature::factory(100)->create();
+        if (app()->environment('local')) {
+            Category::factory(5)->create();
+            Product::factory(10)->create();
+            Feature::factory(10)->create();
+            ProductFeature::factory(100)->create();
+        }
     }
 }

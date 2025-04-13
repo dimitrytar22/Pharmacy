@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +15,8 @@ class Order extends Model
         'user_id',
         'payment_method_id',
         'discount_id',
-        'finished_at'
+        'paid_at',
+        'status_id',
     ];
 
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -52,4 +55,14 @@ class Order extends Model
     {
         return $this->belongsTo(PaymentMethod::class);
     }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter)
+    {
+        return $filter->apply($builder);
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
 }

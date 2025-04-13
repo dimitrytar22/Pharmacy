@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\OrderFilter;
 use App\Http\Requests\Admin\User\Order\StoreRequest;
 use App\Http\Requests\Admin\User\Order\UpdateRequest;
 use App\Http\Services\Admin\OrderService;
 use App\Models\Discount;
 use App\Models\Order;
 use App\Models\PaymentMethod;
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -21,10 +23,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user)
+    public function index(OrderFilter $filter, User $user)
     {
-        $orders = Order::query()->where('user_id', $user->id)->paginate(20);
-        return view('admin.users.orders.index', compact('orders', 'user'));
+        $orders = Order::filter($filter)->where('user_id', $user->id)->paginate(20);
+        $filterData = $this->service->getFilterData();
+        return view('admin.users.orders.index', array_merge(compact('orders', 'user'), $filterData));
     }
 
     /**
@@ -64,7 +67,8 @@ class OrderController extends Controller
     {
         $paymentMethods = PaymentMethod::all();
         $discounts = Discount::all();
-        return view('admin.orders.edit', compact('order', 'paymentMethods', 'discounts'));
+        $statuses = Status::all();
+        return view('admin.orders.edit', compact('order', 'paymentMethods', 'discounts', 'statuses'));
     }
 
     /**

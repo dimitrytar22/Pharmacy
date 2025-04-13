@@ -22,7 +22,7 @@ class CheckoutMiddleware
         if (!$order || $user->id !== $authenticatedUserId) {
             abort(403);
         }
-        if($order->finished_at !== null){
+        if($order->paid_at !== null){
             return redirect()->route('home');
         }
         return $next($request);

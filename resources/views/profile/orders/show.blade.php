@@ -8,7 +8,7 @@
 
         <div class="mb-4">
             <p><strong>Created at:</strong> {{ $order->created_at }}</p>
-            <p><strong>Status:</strong> {{ $order->finished_at ? 'Paid at ' . $order->finished_at : 'Not paid' }}</p>
+            <p><strong>Status:</strong> {{ $order->paid_at ? 'Paid at ' . $order->paid_at : 'Not paid' }}</p>
             <p><strong>Total:</strong> {{ $order->totalSum() }}$</p>
         </div>
 

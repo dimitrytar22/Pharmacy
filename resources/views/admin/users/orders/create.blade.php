@@ -96,10 +96,10 @@
                         @enderror
 
                         <div class="mb-3 mt-3">
-                            <label for="finished_at" class="form-label">Finished At</label>
-                            <input type="datetime-local" id="finished_at" name="finished_at" value=""
+                            <label for="paid_at" class="form-label">Paid At</label>
+                            <input type="datetime-local" id="paid_at" name="paid_at" value=""
                                    class="form-control" placeholder="Select date and time">
-                            @error('finished_at')
+                            @error('paid_at')
                             <x-input-error :messages="$message"/>
                             @enderror
                         </div>

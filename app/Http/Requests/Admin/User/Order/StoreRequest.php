@@ -27,7 +27,8 @@ class StoreRequest extends FormRequest
             'products' => 'required|array',
             'products.*.id' => 'required|integer|exists:products,id',
             'products.*.amount' => 'required|integer',
-            'finished_at' => 'date_format:Y-m-d\TH:i',
+            'status_id' => 'required|integer|exists:statuses,id',
+            'paid_at' => 'date_format:Y-m-d\TH:i',
         ];
     }
 
@@ -45,7 +46,10 @@ class StoreRequest extends FormRequest
             'products.*.amount.integer' => 'Product amount should be an integer',
             'discount_id.integer' => 'Discount should be an integer',
             'discount_id.exists' => 'Discount doesn\'t exist',
-            'finished_at.date_format' => 'Invalid date time format',
+            'status_id.required' =>'Status is required',
+            'status_id.integer' =>'Status id should be an integer',
+            'status_id.exists' =>'Status doesn\'t exist',
+            'paid_at.date_format' => 'Invalid date time format',
         ];
     }
 }
