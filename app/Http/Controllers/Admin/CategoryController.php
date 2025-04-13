@@ -49,4 +49,19 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully!');
     }
+    public function deleted()
+    {
+        $deletedCategories = Category::onlyTrashed()->paginate(20);
+        return view('admin.categories.deleted', compact('deletedCategories'));
+    }
+    public function restore(Category $category)
+    {
+        $this->service->restore($category);
+        return redirect()->route('admin.categories.deleted.index')->with('success', 'Category restored successfully!');
+    }
+    public function forceDestroy(Category $category)
+    {
+        $this->service->forceDestroy($category);
+        return redirect()->route('admin.categories.deleted.index')->with('success', 'Category deleted permanently!');
+    }
 }

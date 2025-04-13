@@ -4,6 +4,8 @@ namespace Tests\Feature\Admin;
 
 use App\Models\Category;
 use App\Models\Feature;
+use App\Models\Order;
+use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -145,7 +147,7 @@ class ProductTest extends TestCase
             'count' => 999,
             'image' => 'image.png'
         ]);
-        $prompt = Str::substr($product->title,0,3);
+        $prompt = Str::substr($product->title, 0, 3);
 
         $response = $this->actingAs($this->admin)
             ->post(route('admin.products.search', [
@@ -153,6 +155,61 @@ class ProductTest extends TestCase
             ]));
         $response->assertJsonPath('error', null);
 
+    }
+
+    public function test_features_can_be_detached_when_product_is_force_deleted()
+    {
+        Storage::fake('public');
+        Category::factory()->create();
+        $featureIds = [
+            Feature::query()->create([
+                'title' => "Some title1",
+                'description' => 'Some description1'
+            ])->id
+        ];
+        $product = Product::factory()->create();
+        $product->features()->attach($featureIds);
+
+        $this->actingAs($this->admin)
+            ->delete(route('admin.products.forceDestroy', $product->id));
+
+
+        $this->assertDatabaseMissing('products', $product->toArray());
+        $this->assertDatabaseMissing('product_features', [
+            'feature_id' => $featureIds[0],
+            'product_id' => $product->id
+        ]);
+
+        Storage::fake('public');
+    }
+
+
+    public function test_orders_can_be_detached_when_product_is_force_deleted()
+    {
+        Storage::fake('public');
+        Category::factory()->create();
+        $payment_method = PaymentMethod::factory()->create();
+        $order = Order::query()->create([
+            'user_id' => $this->admin->id,
+            'payment_method_id' => $payment_method->id,
+        ]);
+        $orderIds = [
+            $order->id => ['amount' => 3]
+        ];
+        $product = Product::factory()->create();
+        $product->orders()->attach($orderIds);
+
+        $this->actingAs($this->admin)
+            ->delete(route('admin.products.forceDestroy', $product->id));
+
+
+        $this->assertDatabaseMissing('products', $product->toArray());
+        $this->assertDatabaseMissing('order_products', [
+            'order_id' => $order->id,
+            'product_id' => $product->id
+        ]);
+
+        Storage::fake('public');
     }
 
 

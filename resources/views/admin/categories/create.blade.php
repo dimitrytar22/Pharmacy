@@ -21,6 +21,9 @@
                         <label for="title" class="form-label">Category Title</label>
                         <input type="text" name="title" id="title" value="{{ old('title') }}" class="form-control" required>
                     </div>
+                    @error('title')
+                    <x-input-error :messages="$message"/>
+                    @enderror
 
                     <div class="mb-3">
                         <label for="image" class="form-label">Category Image</label>
@@ -31,9 +34,7 @@
                     </div>
 
                     @error('image')
-                    <div class="alert alert-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </div>
+                    <x-input-error :messages="$message"/>
                     @enderror
 
                     <div class="d-flex justify-content-end">

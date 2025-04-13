@@ -15,11 +15,13 @@
             </div>
         @endif
 
-        <div class="mb-3">
-            <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">Add Category</a>
-        </div>
+            <div class="mb-3 d-flex justify-content-end gap-2">
+                <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">Add Category</a>
+                <a href="{{ route('admin.categories.deleted.index') }}" class="btn btn-primary">Trash bin</a>
+            </div>
 
-        <div class="row">
+
+            <div class="row">
             @foreach($categories as $category)
                 <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                     <a href="{{ route('admin.categories.edit', $category->id) }}" class="text-decoration-none">

@@ -70,12 +70,26 @@ Route::group(['prefix' => 'profile', 'middleware' => 'auth', 'as' => 'profile.']
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']], function () {
     Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
-    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
-    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->withTrashed(['edit'])->except(['show']);
+    Route::get('categories/deleted', [\App\Http\Controllers\Admin\CategoryController::class, 'deleted'])->name('categories.deleted.index');
+    Route::get('categories/{category}/restore', [\App\Http\Controllers\Admin\CategoryController::class, 'restore'])->name('categories.restore')->withTrashed(['restore']);
+    Route::delete('categories/{category}/forceDelete', [\App\Http\Controllers\Admin\CategoryController::class, 'forceDestroy'])->name('categories.forceDestroy')->withTrashed(['forceDestroy']);
+
+    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['show']);
     Route::post('products/search', [\App\Http\Controllers\Admin\ProductController::class, 'search'])->name('products.search');
-    Route::resource('users.orders', \App\Http\Controllers\Admin\OrderController::class)->shallow();
+    Route::get('products/deleted', [\App\Http\Controllers\Admin\ProductController::class, 'deleted'])->name('products.deleted.index');
+    Route::get('products/{product}/restore', [\App\Http\Controllers\Admin\ProductController::class, 'restore'])->name('products.restore')->withTrashed(['restore']);
+    Route::delete('products/{product}/forceDelete', [\App\Http\Controllers\Admin\ProductController::class, 'forceDestroy'])->name('products.forceDestroy')->withTrashed(['forceDestroy']);
+
 
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    Route::resource('users.orders', \App\Http\Controllers\Admin\OrderController::class)->shallow();
+
+
+    //ПРИ УДАЛЕНИИ КАТЕГОРИИ (ФОРС) НАДО ОТВЯЗЫВАТЬ КАТЕГОРИЮ В ПОСТАХ + ДОБАВИТЬ СООТВЕТСТВУЮЩИЙ ТЕСТ КЕЙС
+
+
 });
 
 Route::get('/forbidden', function () {

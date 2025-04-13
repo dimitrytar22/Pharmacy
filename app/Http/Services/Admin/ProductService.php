@@ -82,10 +82,7 @@ class ProductService
 
     public function destroy(Product $product)
     {
-        if (!ImageService::imageExistsInDB($product, $product->image)) {
-            ImageService::deleteImage($product->image);
-        }
-        $product->features()->detach();
+
         $product->delete();
     }
 
@@ -102,5 +99,21 @@ class ProductService
                 'message' => 'Resource not found'
             ] : null
         ]);
+    }
+
+
+    public function restore(Product $product)
+    {
+        $product->restore();
+    }
+
+    public function forceDestroy(Product $product)
+    {
+        if ($product->image && !ImageService::imageExistsInDB($product, $product->image)) {
+            ImageService::deleteImage($product->image);
+        }
+        $product->features()->detach();
+        $product->orders()->detach();
+        $product->forceDelete();
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -86,22 +87,26 @@ class CategoryTest extends TestCase
 
     public function test_category_can_be_soft_deleted()
     {
-        Storage::fake('public');
-        $image = UploadedFile::fake()->image('someImageName.jpg');
-        $category = Category::factory()->create([
-            'title' => 'someTitle123',
-            'image' => 'images/categories/' . $image->name,
-        ]);
-        $image->storeAs('images/categories/', $image->name);
+        $category = Category::factory()->create();
         $this->actingAs($this->admin)
             ->delete(route('admin.categories.destroy', $category->id));
 
         $this->assertSoftDeleted('categories', $category->toArray());
-        Storage::disk('public')->assertMissing($category->image);
+
+    }
+
+    public function test_category_can_be_force_deleted()
+    {
+        Storage::fake('public');
+        $category = Category::factory()->create();
+        $this->actingAs($this->admin)
+            ->delete(route('admin.categories.forceDestroy', $category->id));
+
+        $this->assertDatabaseMissing('categories', $category->toArray());
         Storage::fake('public');
     }
 
-    public function test_image_isnt_deleted_from_storage_when_two_categories_have_the_same_image_and_one_category_is_deleted()
+    public function test_image_isnt_deleted_from_storage_when_two_categories_have_the_same_image_and_one_category_is_force_deleted()
     {
         Storage::fake('public');
 
@@ -119,13 +124,13 @@ class CategoryTest extends TestCase
         $image->storeAs('images/categories/', $image->name);
 
         $this->actingAs($this->admin)
-            ->delete(route('admin.categories.destroy', $category1->id));
+            ->delete(route('admin.categories.forceDestroy', $category1->id));
         Storage::disk('public')->assertExists($category2->image);
 
         Storage::fake('public');
     }
 
-    public function test_image_is_deleted_from_storage_when_category_is_deleted()
+    public function test_image_is_deleted_from_storage_when_category_is_force_deleted()
     {
         Storage::fake('public');
 
@@ -139,9 +144,31 @@ class CategoryTest extends TestCase
         $image->storeAs('images/categories/', $image->name);
 
         $this->actingAs($this->admin)
-            ->delete(route('admin.categories.destroy', $category->id));
+            ->delete(route('admin.categories.forceDestroy', $category->id));
         Storage::disk('public')->assertMissing($category->image);
 
         Storage::fake('public');
+    }
+
+    public function test_category_id_value_removes_from_products_when_category_is_force_deleted()
+    {
+        $category = Category::factory()->create();
+        $product = Product::factory()->create([
+            'title' => 'some title',
+            'instruction' => 'some instruction',
+            'category_id' => $category->id,
+            'price' => 11,
+            'count' => 111,
+        ]);
+
+        $this->actingAs($this->admin)
+            ->delete(route('admin.categories.forceDestroy', $category->id));
+        $this->assertDatabaseMissing('categories', [
+            'id' => $category->id
+        ]);
+        $this->assertDatabaseHas('products', [
+            'id' => $product->id,
+            'category_id' => null
+        ]);
     }
 }

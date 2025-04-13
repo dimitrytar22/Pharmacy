@@ -24,6 +24,7 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'title' => 'required|min:3|max:256',
             'image' => 'image',
+            'deleted_at' => 'date_format:Y-m-d\TH:i'
         ];
     }
 }

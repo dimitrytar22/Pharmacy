@@ -63,4 +63,22 @@ class ProductController extends Controller
     {
         return $this->service->search($request);
     }
+
+    public function deleted()
+    {
+        $deletedProducts = Product::onlyTrashed()->paginate(20);
+        return view('admin.products.deleted', compact('deletedProducts'));
+    }
+
+    public function restore(Product $product)
+    {
+        $this->service->restore($product);
+        return redirect()->route('admin.products.deleted.index')->with('success', 'Product restored successfully!');
+    }
+
+    public function forceDestroy(Product $product)
+    {
+        $this->service->forceDestroy($product);
+        return redirect()->route('admin.products.deleted.index')->with('success', 'Product deleted permanently!');
+    }
 }

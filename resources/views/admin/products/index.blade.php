@@ -16,9 +16,10 @@
                 </div>
             @endif
 
-            <div class="mb-3">
-                <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Add Product</a>
-            </div>
+                <div class="mb-3 d-flex justify-content-end gap-2">
+                    <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Add Product</a>
+                    <a href="{{ route('admin.products.deleted.index') }}" class="btn btn-primary">Trash bin</a>
+                </div>
 
             <div class="row">
                 @foreach($products as $product)
